@@ -220,6 +220,7 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             transition: all 0.2s ease;
+            position: relative;
         }
 
         #tab-0 .form-group:hover {
@@ -479,13 +480,13 @@
             border-bottom: 1.5px solid var(--border-color);
         }
 
-        /* Boxes d'information */
+        /* Boxes d'information enrichies */
         #tab-0 .info-box,
         #tab-0 .success-box,
         #tab-0 .warning-box {
-            padding: 1rem;
+            padding: 1.2rem;
             border-radius: 12px;
-            margin: 0.8rem 0;
+            margin: 1rem 0;
             border: 1px solid var(--border-color);
             background: var(--card-bg);
             transition: all 0.2s ease;
@@ -496,36 +497,80 @@
         #tab-0 .info-box h4,
         #tab-0 .success-box h4,
         #tab-0 .warning-box h4 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 0.6rem;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
 
         #tab-0 .info-box p,
         #tab-0 .success-box p,
         #tab-0 .warning-box p {
-            font-size: 0.85rem;
-            line-height: 1.5;
+            font-size: 0.9rem;
+            line-height: 1.6;
             color: var(--text-color);
-            opacity: 0.9;
+            margin-bottom: 0.8rem;
+        }
+
+        #tab-0 .info-box ul,
+        #tab-0 .success-box ul,
+        #tab-0 .warning-box ul {
+            padding-left: 1.5rem;
+            margin: 0.8rem 0;
+        }
+
+        #tab-0 .info-box li,
+        #tab-0 .success-box li,
+        #tab-0 .warning-box li {
+            margin-bottom: 0.4rem;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        #tab-0 .info-box strong,
+        #tab-0 .success-box strong,
+        #tab-0 .warning-box strong {
+            color: var(--primary-color);
+            font-weight: 600;
         }
 
         #tab-0 .info-box {
             border-left: 4px solid var(--info-color);
-            background: linear-gradient(135deg, rgba(108, 160, 220, 0.06) 0%, rgba(108, 160, 220, 0.01) 100%);
+            background: linear-gradient(135deg, rgba(108, 160, 220, 0.08) 0%, rgba(108, 160, 220, 0.02) 100%);
         }
 
         #tab-0 .success-box {
             border-left: 4px solid var(--success-color);
-            background: linear-gradient(135deg, rgba(76, 175, 127, 0.06) 0%, rgba(76, 175, 127, 0.01) 100%);
+            background: linear-gradient(135deg, rgba(76, 175, 127, 0.08) 0%, rgba(76, 175, 127, 0.02) 100%);
         }
 
         #tab-0 .warning-box {
             border-left: 4px solid var(--warning-color);
-            background: linear-gradient(135deg, rgba(217, 166, 108, 0.06) 0%, rgba(217, 166, 108, 0.01) 100%);
+            background: linear-gradient(135deg, rgba(217, 166, 108, 0.08) 0%, rgba(217, 166, 108, 0.02) 100%);
+        }
+
+        /* Section montants */
+        #tab-0 .montant-details {
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin: 0.8rem 0;
+            border: 1px dashed var(--border-color);
+        }
+
+        #tab-0 .montant-details h5 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        #tab-0 .montant-details p {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-color);
         }
 
         /* Bouton télécharger compact */
@@ -1029,7 +1074,7 @@
                         <li>Certificat / qualification</li>
                         <li>Permis (B, C, D…) si indispensable à l'emploi</li>
                         <li>Formation courte d'adaptation au poste</li>
-                        <li>Reconversion vers un métier qui recrute</li>
+                        <li>Reconversion vers un métier qui recrutent</li>
                     </ul>
                     <p><strong>❌ Formations refusées en général :</strong></p>
                     <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
@@ -1159,49 +1204,28 @@
             document.querySelectorAll('.tab')[index].classList.add('active');
         }
         
-        // Get remuneration details for PDF
-        function getRemunerationDetailsForPDF(type) {
-            const details = {
-                "AREF": {
-                    title: "AREF - Allocation d'aide au retour à l'emploi - Formation",
-                    montant: "Équivalent à votre ARE actuelle",
-                    details: "Maintien de l'ARE pendant la formation si elle est prescrite par France Travail et dure au moins 40 heures."
-                },
-                "RFF": {
-                    title: "RFF - Rémunération de Fin de Formation",
-                    montant: "Plafonnée à 652,02 € / mois selon le décret",
-                    details: "Pour les personnes dont les droits ARE s'épuisent pendant la formation."
-                },
-                "RFFT": {
-                    title: "RFFT - Rémunération de Formation France Travail",
-                    montant: "De 224,68 € à 769,49 € / mois (jusqu'à 2 170 € pour travailleurs handicapés)",
-                    details: "Pour les demandeurs d'emploi non indemnisés suivant une formation prescrite par France Travail."
-                },
-                "RSFP": {
-                    title: "RSFP - Rémunération des Stagiaires de la Formation Professionnelle",
-                    montant: "Barème indicatif : <18 ans: 220,92€/mois, 18-25 ans: 561,68€/mois, 26 ans+: 769,49€/mois",
-                    details: "Pour les formations financées par la Région ou l'État."
-                },
-                "POE": {
-                    title: "POE - Préparation Opérationnelle à l'Emploi",
-                    montant: "Allocation France Travail (ARE, RFPE, etc.)",
-                    details: "Pas de salaire (sauf cas particuliers). Formation 100% financée."
-                },
-                "AIF": {
-                    title: "AIF - Aide Individuelle à la Formation",
-                    montant: "Financement des frais de formation (100% ou complément)",
-                    details: "L'AIF finance la formation, pas la rémunération. AREF possible si ARE et formation ≥ 40h."
-                },
-                "CPF": {
-                    title: "CPF - Compte Personnel de Formation",
-                    montant: "Utilisation des droits CPF + abondement possible par France Travail",
-                    details: "AREF possible si formation ≥ 40h et prescrite par France Travail."
-                }
-            };
-            return details[type] || { title: "", montant: "", details: "" };
+        // Fonction pour convertir HTML en texte pour PDF
+        function htmlToText(html) {
+            if (!html) return '';
+            
+            let text = html
+                .replace(/<br\s*\/?>/gi, '\n')
+                .replace(/<p>/gi, '\n')
+                .replace(/<\/p>/gi, '\n')
+                .replace(/<ul>/gi, '\n')
+                .replace(/<\/ul>/gi, '\n')
+                .replace(/<li>/gi, '• ')
+                .replace(/<\/li>/gi, '\n')
+                .replace(/<strong>/gi, '')
+                .replace(/<\/strong>/gi, '')
+                .replace(/<[^>]+>/g, '')
+                .replace(/\n\s*\n/g, '\n')
+                .trim();
+            
+            return text;
         }
         
-        // Generate PDF amélioré
+        // Generate PDF amélioré avec informations détaillées
         function generatePDF(are, rsa, formation_type, formation_duree, droits_fin, mainResult, mainDetails, resultBoxes) {
             let JsPDFClass;
             if (typeof window.jspdf !== 'undefined') {
@@ -1297,8 +1321,8 @@
             
             yPos += 10;
             
-            // Section : Montant
-            if (yPos > 230) {
+            // Section : Informations détaillées
+            if (yPos > 200) {
                 doc.addPage();
                 yPos = 20;
             }
@@ -1306,29 +1330,61 @@
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
             doc.setTextColor(0, 0, 0);
-            doc.text('Montant :', margin, yPos);
+            doc.text('Informations détaillées :', margin, yPos);
             yPos += 10;
             
-            let remunerationType = '';
-            if (formation_type === 'POE') remunerationType = 'POE';
-            else if (formation_type === 'AIF') remunerationType = 'AIF';
-            else if (formation_type === 'CPF') remunerationType = 'CPF';
-            else if (formation_type.includes('Région')) remunerationType = 'RSFP';
-            else if (are === 'Oui' && formation_duree === '> 40 heures') remunerationType = 'AREF';
-            else if (are === 'Non' && rsa === 'Non') remunerationType = 'RFFT';
-            
-            const remunerationInfo = getRemunerationDetailsForPDF(remunerationType);
-            
-            if (remunerationInfo.montant) {
-                doc.setFontSize(11);
-                doc.setFont('helvetica', 'normal');
-                doc.setTextColor(60, 60, 60);
-                const montantLines = doc.splitTextToSize(remunerationInfo.montant, contentWidth);
-                doc.text(montantLines, margin, yPos);
-                yPos += (montantLines.length * 6) + 8;
+            // Ajouter les informations détaillées de la simulation
+            if (resultBoxes && resultBoxes.length > 0) {
+                resultBoxes.forEach((box, index) => {
+                    if (box.type === 'montant-details') {
+                        // Ne pas traiter les boîtes de montant-details ici
+                        return;
+                    }
+                    
+                    if (yPos > 240) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
+                    
+                    // Titre de la boîte
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    
+                    // Couleur selon le type
+                    if (box.type === 'success') {
+                        doc.setTextColor(76, 175, 127); // Vert
+                    } else if (box.type === 'warning') {
+                        doc.setTextColor(217, 166, 108); // Orange
+                    } else {
+                        doc.setTextColor(108, 160, 220); // Bleu
+                    }
+                    
+                    const cleanMessage = box.message.replace(/✅|⚠️|ℹ️|❓/g, '').trim();
+                    doc.text(cleanMessage, margin, yPos);
+                    yPos += 8;
+                    
+                    // Contenu de la boîte
+                    doc.setFontSize(10);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(60, 60, 60);
+                    
+                    const boxContent = htmlToText(box.details);
+                    if (boxContent) {
+                        const contentLines = doc.splitTextToSize(boxContent, contentWidth);
+                        doc.text(contentLines, margin, yPos);
+                        yPos += (contentLines.length * 5) + 8;
+                    }
+                    
+                    // Ligne séparatrice entre les boîtes
+                    if (index < resultBoxes.length - 1) {
+                        doc.setDrawColor(200, 200, 200);
+                        doc.line(margin, yPos, pageWidth - margin, yPos);
+                        yPos += 10;
+                    }
+                });
             }
             
-            // Section : Détails sur la Rémunération
+            // Section : Montant
             if (yPos > 220) {
                 doc.addPage();
                 yPos = 20;
@@ -1337,24 +1393,59 @@
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
             doc.setTextColor(0, 0, 0);
-            doc.text('Détails sur la Rémunération :', margin, yPos);
+            doc.text('Informations financières :', margin, yPos);
             yPos += 10;
             
+            // Déterminer le type de rémunération
+            let remunerationType = '';
+            if (formation_type === 'POE') remunerationType = 'POE';
+            else if (formation_type === 'AIF') remunerationType = 'AIF';
+            else if (formation_type === 'CPF') remunerationType = 'CPF';
+            else if (formation_type.includes('Région')) remunerationType = 'RSFP';
+            else if (are === 'Oui' && formation_duree === '> 40 heures') remunerationType = 'AREF';
+            else if (are === 'Non' && rsa === 'Non') remunerationType = 'RFFT';
+            
+            // Informations sur les montants
             doc.setFontSize(11);
             doc.setFont('helvetica', 'normal');
             doc.setTextColor(60, 60, 60);
             
-            if (remunerationInfo.details) {
-                const detailsLines = doc.splitTextToSize(remunerationInfo.details, contentWidth);
-                doc.text(detailsLines, margin, yPos);
-                yPos += (detailsLines.length * 6) + 8;
+            let montantInfo = '';
+            switch(remunerationType) {
+                case 'AREF':
+                    montantInfo = "Montant : Équivalent à votre ARE actuelle\n\nDétails : Maintien de l'ARE pendant la formation si elle est prescrite par France Travail et dure au moins 40 heures.";
+                    break;
+                case 'RFF':
+                    montantInfo = "Montant : Plafonnée à 652,02 € / mois selon le décret\n\nDétails : Pour les personnes dont les droits ARE s'épuisent pendant la formation.";
+                    break;
+                case 'RFFT':
+                    montantInfo = "Montant : De 224,68 € à 769,49 € / mois (jusqu'à 2 170 € pour travailleurs handicapés)\n\nDétails : Pour les demandeurs d'emploi non indemnisés suivant une formation prescrite par France Travail.";
+                    break;
+                case 'RSFP':
+                    montantInfo = "Montant : Barème indicatif :\n• Moins de 18 ans: 220,92€/mois\n• 18-25 ans: 561,68€/mois\n• 26 ans+: 769,49€/mois\n\nDétails : Pour les formations financées par la Région ou l'État.";
+                    break;
+                case 'POE':
+                    montantInfo = "Montant : Allocation France Travail (ARE, RFPE, etc.)\n\nDétails : Pas de salaire (sauf cas particuliers). Formation 100% financée.";
+                    break;
+                case 'AIF':
+                    montantInfo = "Montant : Financement des frais de formation (100% ou complément)\n\nDétails : L'AIF finance la formation, pas la rémunération. AREF possible si ARE et formation ≥ 40h.";
+                    break;
+                case 'CPF':
+                    montantInfo = "Montant : Utilisation des droits CPF + abondement possible par France Travail\n\nDétails : AREF possible si formation ≥ 40h et prescrite par France Travail.";
+                    break;
+                default:
+                    montantInfo = "Les informations financières dépendent de votre situation spécifique. Veuillez consulter votre conseiller France Travail pour des précisions.";
             }
+            
+            const montantLines = doc.splitTextToSize(montantInfo, contentWidth);
+            doc.text(montantLines, margin, yPos);
+            yPos += (montantLines.length * 5) + 15;
             
             doc.setFontSize(10);
             doc.setFont('helvetica', 'italic');
             doc.setTextColor(100, 100, 100);
-            doc.text('Selon la documentation officielle.', margin, yPos);
-            yPos += 15;
+            doc.text('Ces montants sont indicatifs et peuvent évoluer. Source : France Travail.', margin, yPos);
+            yPos += 10;
             
             // Section : Prochaines étapes
             if (yPos > 200) {
@@ -1414,6 +1505,247 @@
         // Variable globale pour stocker les données de simulation
         let simulationData = null;
         
+        // Fonction pour générer des informations détaillées enrichies
+        function generateDetailedInfo(are, rsa, formation_type, formation_duree, droits_fin) {
+            let boxes = [];
+            
+            if (formation_type === 'POE') {
+                boxes.push({
+                    type: 'success',
+                    message: '🎯 POE - Préparation Opérationnelle à l\'Emploi',
+                    details: 'Formation ciblée pour un poste précis (POEI) ou un métier en tension (POEC).'
+                });
+                
+                if (are === 'Oui' && formation_duree === '> 40 heures') {
+                    boxes.push({
+                        type: 'info',
+                        message: '💰 AREF - Maintien de l\'ARE',
+                        details: 'Votre ARE est maintenue pendant toute la durée de la POE.'
+                    });
+                    
+                    boxes.push({
+                        type: 'info',
+                        message: '📋 Conditions pour l\'AREF',
+                        details: `
+                            <ul>
+                                <li>Formation prescrite par France Travail</li>
+                                <li>Durée minimale de 40 heures</li>
+                                <li>Assiduité obligatoire</li>
+                                <li>Déclaration mensuelle de situation</li>
+                            </ul>
+                        `
+                    });
+                } else if (rsa === 'Oui') {
+                    boxes.push({
+                        type: 'info',
+                        message: '💰 RSA maintenu',
+                        details: 'Le RSA peut être maintenu pendant la POE sous certaines conditions.'
+                    });
+                }
+                
+                boxes.push({
+                    type: 'info',
+                    message: '⚙️ Processus POE',
+                    details: `
+                        <ul>
+                            <li><strong>Étape 1 :</strong> Identification du besoin en formation</li>
+                            <li><strong>Étape 2 :</strong> Signature de la convention tripartite</li>
+                            <li><strong>Étape 3 :</strong> Entrée en formation</li>
+                            <li><strong>Étape 4 :</strong> Suivi et évaluation</li>
+                            <li><strong>Étape 5 :</strong> Embauche (POEI) ou recherche d'emploi (POEC)</li>
+                        </ul>
+                    `
+                });
+                
+                boxes.push({
+                    type: 'warning',
+                    message: '⚠️ Points d\'attention',
+                    details: `
+                        <ul>
+                            <li>La POE ne garantit pas l'embauche (sauf POEI avec engagement écrit)</li>
+                            <li>Rythme souvent intensif</li>
+                            <li>Sélection possible via tests et entretiens</li>
+                            <li>Engagement d'assiduité requis</li>
+                        </ul>
+                    `
+                });
+                
+            } else if (formation_type === 'AIF') {
+                boxes.push({
+                    type: 'info',
+                    message: '💰 AIF - Aide Individuelle à la Formation',
+                    details: 'Financement de formation au cas par cas par France Travail.'
+                });
+                
+                if (are === 'Oui' && formation_duree === '> 40 heures') {
+                    boxes.push({
+                        type: 'success',
+                        message: '✅ AREF possible',
+                        details: 'Maintien de votre ARE pendant la formation financée par AIF.'
+                    });
+                    
+                    boxes.push({
+                        type: 'info',
+                        message: '📊 Montant AREF',
+                        details: 'Identique à votre ARE actuelle. Vous devez actualiser votre situation chaque mois.'
+                    });
+                }
+                
+                boxes.push({
+                    type: 'info',
+                    message: '📝 Critères d\'éligibilité AIF',
+                    details: `
+                        <ul>
+                            <li>Formation professionnalisante</li>
+                            <li>Cohérente avec votre projet professionnel</li>
+                            <li>Réaliste sur le marché du travail local</li>
+                            <li>Absence d\'autres financements possibles</li>
+                            <li>Organisme de formation certifié Qualiopi</li>
+                        </ul>
+                    `
+                });
+                
+                boxes.push({
+                    type: 'info',
+                    message: '⏳ Délais et démarches',
+                    details: `
+                        <ul>
+                            <li><strong>Délai d\'instruction :</strong> 2 à 4 semaines</li>
+                            <li><strong>Pièces à fournir :</strong> devis, projet professionnel, CV</li>
+                            <li><strong>Validation :</strong> par votre conseiller France Travail</li>
+                            <li><strong>Paiement :</strong> direct à l\'organisme de formation</li>
+                        </ul>
+                    `
+                });
+                
+            } else if (formation_type === 'CPF') {
+                boxes.push({
+                    type: 'info',
+                    message: '💳 Formation via votre CPF',
+                    details: 'Utilisation de vos droits CPF avec possibilité d\'abondement par France Travail.'
+                });
+                
+                if (are === 'Oui' && formation_duree === '> 40 heures') {
+                    boxes.push({
+                        type: 'success',
+                        message: '✅ AREF possible',
+                        details: 'Maintien de votre ARE si la formation est prescrite par France Travail.'
+                    });
+                }
+                
+                boxes.push({
+                    type: 'info',
+                    message: '📈 Abondement CPF par France Travail',
+                    details: `
+                        <ul>
+                            <li>Possible si vos droits CPF sont insuffisants</li>
+                            <li>Nécessite un avis favorable de votre conseiller</li>
+                            <li>Formation doit être éligible au CPF</li>
+                            <li>Justification du projet professionnel requise</li>
+                        </ul>
+                    `
+                });
+                
+                boxes.push({
+                    type: 'warning',
+                    message: '⚠️ Points importants CPF',
+                    details: `
+                        <ul>
+                            <li>Vérifiez vos droits sur Mon Compte Formation</li>
+                            <li>Certaines formations peuvent nécessiter un cofinancement</li>
+                            <li>AREF uniquement si formation ≥ 40h et prescrite</li>
+                            <li>Conservez toutes les attestations et justificatifs</li>
+                        </ul>
+                    `
+                });
+                
+            } else if (formation_type === 'Formation Région (ex : SFER)') {
+                boxes.push({
+                    type: 'info',
+                    message: '🌍 Formation régionale SFER',
+                    details: 'Formation financée à 100% par votre Conseil Régional.'
+                });
+                
+                if (are === 'Oui') {
+                    boxes.push({
+                        type: 'success',
+                        message: '✅ Maintien de l\'ARE',
+                        details: 'Vous continuez à percevoir votre ARE pendant la formation régionale.'
+                    });
+                } else if (rsa === 'Oui') {
+                    boxes.push({
+                        type: 'info',
+                        message: '💰 RSA maintenu',
+                        details: 'Le RSA peut être maintenu pendant une formation régionale.'
+                    });
+                } else if (are === 'Non' && rsa === 'Non') {
+                    boxes.push({
+                        type: 'info',
+                        message: '💶 RSFP possible',
+                        details: 'Rémunération des Stagiaires de la Formation Professionnelle selon barème régional.'
+                    });
+                    
+                    boxes.push({
+                        type: 'montant-details',
+                        message: '📊 Barème indicatif RSFP',
+                        details: `
+                            <div class="montant-details">
+                                <h5>Montants mensuels indicatifs :</h5>
+                                <p>• Moins de 18 ans : 220,92 €</p>
+                                <p>• 18 à 25 ans : 561,68 €</p>
+                                <p>• 26 ans et plus : 769,49 €</p>
+                                <p>• Travailleurs handicapés : jusqu'à 2 170 €</p>
+                            </div>
+                        `
+                    });
+                }
+                
+                boxes.push({
+                    type: 'info',
+                    message: '🎯 Conditions SFER',
+                    details: `
+                        <ul>
+                            <li>Être inscrit à France Travail</li>
+                            <li>Formation labellisée SFER</li>
+                            <li>Projet professionnel validé</li>
+                            <li>Respecter l'assiduité</li>
+                            <li>Déclaration mensuelle de situation</li>
+                        </ul>
+                    `
+                });
+            }
+            
+            // Ajouter des informations communes
+            boxes.push({
+                type: 'info',
+                message: '📞 Prochaines démarches',
+                details: `
+                    <ul>
+                        <li>Prendre rendez-vous avec votre conseiller France Travail</li>
+                        <li>Préparer votre projet professionnel détaillé</li>
+                        <li>Rechercher des formations éligibles</li>
+                        <li>Rassembler les documents nécessaires (RIB, pièce d'identité, justificatifs)</li>
+                        <li>Actualiser régulièrement votre situation sur France Travail</li>
+                    </ul>
+                `
+            });
+            
+            boxes.push({
+                type: 'warning',
+                message: '⏰ Délais à respecter',
+                details: `
+                    <ul>
+                        <li>Demande de financement : au moins 1 mois avant le début de formation</li>
+                        <li>Déclaration de situation : chaque fin de mois</li>
+                        <li>Justificatifs d'assiduité : à fournir selon les exigences</li>
+                        <li>Actualisation France Travail : obligatoire même en formation</li>
+                    </ul>
+                `
+            });
+            
+            return boxes;
+        }
+        
         // Form submission
         window.handleSubmit = function(event) {
             event.preventDefault();
@@ -1434,111 +1766,32 @@
             // Calculate results
             let mainResult = '';
             let mainDetails = '';
-            let resultBoxes = [];
             
-            // Logique de simulation
+            // Logique de simulation principale
             if (formation_type === 'POE') {
                 if (are === 'Oui' || rsa === 'Oui') {
                     mainResult = "✅ Vous êtes éligible à une POE";
                     mainDetails = "La POE est accessible aux bénéficiaires de l'ARE et du RSA.";
-                    resultBoxes.push({
-                        type: 'success',
-                        message: "✅ POE - Préparation Opérationnelle à l'Emploi",
-                        details: "Formation ciblée pour un poste précis (POEI) ou un métier en tension (POEC)."
-                    });
-                    
-                    if (are === 'Oui' && formation_duree === '> 40 heures') {
-                        resultBoxes.push({
-                            type: 'info',
-                            message: "💰 AREF possible",
-                            details: "Maintien de votre ARE pendant la POE si elle est prescrite par France Travail."
-                        });
-                    } else if (rsa === 'Oui') {
-                        resultBoxes.push({
-                            type: 'info',
-                            message: "💰 RSA maintenu",
-                            details: "Le RSA peut être maintenu pendant la POE sous certaines conditions."
-                        });
-                    }
                 } else {
                     mainResult = "ℹ️ POE possible";
                     mainDetails = "La POE est accessible même sans allocation spécifique.";
-                    resultBoxes.push({
-                        type: 'info',
-                        message: "ℹ️ POE sans allocation",
-                        details: "Vous pouvez suivre une POE sans percevoir d'allocation. RFFT possible sous conditions."
-                    });
                 }
             } 
             else if (formation_type === 'AIF') {
                 mainResult = "ℹ️ AIF - Aide Individuelle à la Formation";
                 mainDetails = "Financement de formation au cas par cas par France Travail.";
-                resultBoxes.push({
-                    type: 'info',
-                    message: "💰 AIF - Financement formation",
-                    details: "Aide pour financer une formation lorsque aucun autre dispositif n'est possible."
-                });
-                
-                if (are === 'Oui' && formation_duree === '> 40 heures') {
-                    resultBoxes.push({
-                        type: 'success',
-                        message: "✅ AREF possible",
-                        details: "Maintien de votre ARE pendant la formation financée par AIF."
-                    });
-                } else if (rsa === 'Oui') {
-                    resultBoxes.push({
-                        type: 'info',
-                        message: "💰 RSA maintenu",
-                        details: "Le RSA peut être maintenu pendant une formation AIF."
-                    });
-                }
             }
             else if (formation_type === 'CPF') {
                 mainResult = "ℹ️ Formation via votre CPF";
                 mainDetails = "Utilisation de vos droits CPF avec possibilité d'abondement par France Travail.";
-                resultBoxes.push({
-                    type: 'info',
-                    message: "💰 Formation CPF",
-                    details: "Financement via votre Compte Personnel de Formation."
-                });
-                
-                if (are === 'Oui' && formation_duree === '> 40 heures') {
-                    resultBoxes.push({
-                        type: 'success',
-                        message: "✅ AREF possible",
-                        details: "Maintien de votre ARE si la formation est prescrite par France Travail."
-                    });
-                } else if (rsa === 'Oui') {
-                    resultBoxes.push({
-                        type: 'info',
-                        message: "💰 RSA maintenu",
-                        details: "Le RSA peut être maintenu pendant une formation CPF sous conditions."
-                    });
-                }
             }
             else if (formation_type === 'Formation Région (ex : SFER)') {
                 mainResult = "ℹ️ Formation régionale";
                 mainDetails = "Formation financée à 100% par votre Conseil Régional.";
-                resultBoxes.push({
-                    type: 'info',
-                    message: "🌍 Formation Régionale",
-                    details: "Financement intégral par la Région."
-                });
-                
-                if (are === 'Oui') {
-                    resultBoxes.push({
-                        type: 'success',
-                        message: "✅ Maintien de l'ARE",
-                        details: "Vous continuez à percevoir votre ARE pendant la formation régionale."
-                    });
-                } else if (rsa === 'Oui') {
-                    resultBoxes.push({
-                        type: 'info',
-                        message: "💰 RSA maintenu",
-                        details: "Le RSA peut être maintenu pendant une formation régionale."
-                    });
-                }
             }
+            
+            // Générer les informations détaillées enrichies
+            const resultBoxes = generateDetailedInfo(are, rsa, formation_type, formation_duree, droits_fin);
             
             // Stocker les données pour le PDF
             simulationData = {
@@ -1546,7 +1799,7 @@
                 mainResult, mainDetails, resultBoxes
             };
             
-            // Affichage des résultats avec nouveau format compact
+            // Affichage des résultats avec nouveau format enrichi
             const resultsContainer = document.getElementById('results-container');
             resultsContainer.innerHTML = `
                 <div class="result-header">
@@ -1583,12 +1836,18 @@
                 
                 <div class="simulation-details">
                     <h3>💡 Informations détaillées</h3>
-                    ${resultBoxes.map(box => `
-                        <div class="${box.type}-box">
-                            <h4>${box.message}</h4>
-                            <p>${box.details}</p>
-                        </div>
-                    `).join('')}
+                    ${resultBoxes.map(box => {
+                        if (box.type === 'montant-details') {
+                            return box.details;
+                        } else {
+                            return `
+                                <div class="${box.type}-box">
+                                    <h4>${box.message}</h4>
+                                    ${box.details}
+                                </div>
+                            `;
+                        }
+                    }).join('')}
                 </div>
                 
                 <button class="download-btn" id="download-pdf-btn">
