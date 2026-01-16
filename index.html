@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -339,7 +340,7 @@
             background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
         }
 
-        /* Résultats */
+        /* Résultats améliorés */
         .result-header {
             background: linear-gradient(135deg, var(--card-bg) 0%, rgba(90, 125, 154, 0.05) 100%);
             padding: 28px;
@@ -347,6 +348,35 @@
             margin: 24px 0;
             border: 1px solid var(--border-color);
             text-align: center;
+        }
+
+        .result-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .info-box, .success-box, .warning-box {
@@ -364,6 +394,14 @@
 
         .warning-box {
             border-left-color: var(--warning-color);
+        }
+
+        .montant-highlight {
+            background: linear-gradient(135deg, rgba(76, 175, 127, 0.1), rgba(108, 160, 220, 0.1));
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--success-color);
+            margin: 20px 0;
         }
 
         .situation-summary {
@@ -386,7 +424,7 @@
             box-shadow: var(--shadow-sm);
         }
 
-        .download-btn {
+        .download-btn, .print-btn {
             width: 100%;
             padding: 16px;
             background: linear-gradient(135deg, var(--success-color), var(--success-light));
@@ -396,7 +434,7 @@
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            margin: 24px 0;
+            margin: 12px 0;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -404,10 +442,59 @@
             gap: 10px;
         }
 
-        .download-btn:hover {
+        .print-btn {
+            background: linear-gradient(135deg, var(--info-color), #5A7D9A);
+        }
+
+        .download-btn:hover, .print-btn:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
+        }
+
+        .download-btn:hover {
             background: linear-gradient(135deg, var(--success-light), var(--success-color));
+        }
+
+        .print-btn:hover {
+            background: linear-gradient(135deg, #5A7D9A, var(--info-color));
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        /* Styles d'impression */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            
+            #printable-results,
+            #printable-results * {
+                visibility: visible;
+            }
+            
+            #printable-results {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+                background: white;
+                color: black;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            .result-card, .info-box, .situation-item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
         }
 
         /* Footer */
@@ -442,6 +529,10 @@
             .radio-group {
                 grid-template-columns: 1fr;
             }
+            
+            .button-group {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -453,7 +544,7 @@
                 padding: 20px;
             }
             
-            .situation-summary {
+            .situation-summary, .result-details-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -466,7 +557,7 @@
 <body class="light-theme">
     <div class="container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar no-print">
             <h3 style="color: var(--primary-color); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
                 <span>🏛️</span> France Travail
             </h3>
@@ -509,13 +600,13 @@
         <!-- Main Content -->
         <main>
             <!-- Header -->
-            <div class="main-header">
+            <div class="main-header no-print">
                 <h1 style="margin-bottom: 12px; font-size: 28px;">🎓 Simulation & Informations – Aides à la Formation</h1>
                 <p style="opacity: 0.9; font-size: 16px;">France Travail • Régions • Dispositif SFER</p>
             </div>
             
             <!-- Tabs -->
-            <div class="tabs">
+            <div class="tabs no-print">
                 <button class="tab active" onclick="switchTab(0)">🎯 Simulation</button>
                 <button class="tab" onclick="switchTab(1)">📘 Formations</button>
                 <button class="tab" onclick="switchTab(2)">💶 Rémunérations</button>
@@ -699,7 +790,7 @@
             </div>
             
             <!-- Footer -->
-            <div class="footer">
+            <div class="footer no-print">
                 🛈 Application informative <br>
                 📅 Dernière mise à jour : Janvier 2026 <br>
                 Sources : France Travail, Service Public
@@ -781,119 +872,259 @@
             let resultTitle = '';
             let resultDetails = '';
             let resultType = 'info';
-            let montantInfo = '';
+            let dispositif = '';
+            let montant = '';
             let conditions = '';
+            let informations = [];
+            let remarques = [];
             
+            // Logique selon les combinaisons
             if (formation_type === 'POE') {
                 if (are === 'Oui') {
                     if (formation_duree === '> 40 heures') {
-                        resultTitle = '✅ Éligible au maintien de l\'ARE (AREF) pendant la POE';
-                        resultDetails = 'Vous pouvez bénéficier du maintien de votre Allocation chômage pendant toute la durée de la formation POE.';
-                        montantInfo = 'Montant : Identique à votre ARE actuelle';
-                        conditions = 'Conditions : Formation ≥ 40h, prescrite par France Travail, assiduité obligatoire';
+                        resultTitle = '✅ Éligible au maintien de l\'ARE pendant la POE';
+                        resultDetails = 'Vous pouvez bénéficier du dispositif AREF (maintien de votre Allocation chômage) pendant toute la durée de la formation POE.';
+                        dispositif = 'AREF (Allocation d\'aide au Retour à l\'Emploi - Formation)';
+                        montant = 'Identique à votre ARE actuelle';
+                        conditions = 'Formation de plus de 40 heures prescrite par France Travail, assiduité obligatoire';
+                        informations.push('Votre ARE sera maintenue pendant toute la formation');
+                        informations.push('Vous devez actualiser votre situation chaque mois');
+                        informations.push('La formation doit être prescrite par votre conseiller France Travail');
                         resultType = 'success';
                     } else {
                         resultTitle = '⚠️ Formation POE de courte durée';
-                        resultDetails = 'Pour une formation ≤ 40h, le maintien de l\'ARE n\'est pas automatique. Consultez votre conseiller.';
+                        resultDetails = 'Pour une formation de 40 heures ou moins, le maintien de l\'ARE n\'est pas automatique. Consultez votre conseiller pour les options disponibles.';
+                        dispositif = 'Pas d\'AREF automatique (durée ≤ 40h)';
+                        conditions = 'Consultez votre conseiller France Travail pour les possibilités de rémunération';
+                        remarques.push('Certaines POE courtes peuvent être rémunérées différemment');
                         resultType = 'warning';
                     }
                 } else {
-                    resultTitle = 'ℹ️ Allocation de formation possible (RFFT)';
-                    resultDetails = 'Vous pourriez bénéficier de la Rémunération de Formation France Travail pendant votre POE.';
-                    montantInfo = 'Montant indicatif : De 224€ à 769€/mois selon votre situation';
+                    resultTitle = 'ℹ️ Allocation de formation possible';
+                    resultDetails = 'En tant que demandeur d\'emploi non indemnisé, vous pourriez bénéficier de la Rémunération de Formation France Travail (RFFT).';
+                    dispositif = 'RFFT (Rémunération de Formation France Travail)';
+                    montant = 'De 224€ à 769€/mois selon votre situation';
+                    conditions = 'Formation prescrite par France Travail, assiduité obligatoire';
+                    informations.push('Montant variable selon l\'âge et la situation familiale');
+                    informations.push('Versement mensuel sur présentation des justificatifs');
                     resultType = 'info';
                 }
             } 
             else if (formation_type === 'AIF') {
                 resultTitle = 'ℹ️ AIF - Aide Individuelle à la Formation';
-                resultDetails = 'Financement possible de votre formation après étude de dossier par France Travail.';
+                resultDetails = 'Financement possible de votre formation après étude de dossier par France Travail. L\'AIF finance les frais de formation, pas nécessairement la rémunération.';
+                dispositif = 'AIF (Aide Individuelle à la Formation)';
                 if (are === 'Oui' && formation_duree === '> 40 heures') {
-                    montantInfo = 'AREF possible : Maintien de votre ARE pendant la formation';
+                    montant = 'AREF possible : maintien de votre ARE pendant la formation';
+                    informations.push('L\'AIF finance les frais pédagogiques de la formation');
+                    informations.push('Votre ARE peut être maintenue si la formation dure plus de 40h');
+                    informations.push('Délai d\'instruction du dossier : 2 à 4 semaines');
+                } else {
+                    montant = 'Financement des frais de formation uniquement';
+                    informations.push('Pas de rémunération automatique avec l\'AIF seule');
+                    informations.push('Autres dispositifs de rémunération peuvent être combinés');
                 }
                 resultType = 'info';
             }
             else if (formation_type === 'CPF') {
                 resultTitle = '💳 Formation via votre CPF';
-                resultDetails = 'Utilisation de vos droits CPF avec possibilité d\'abondement par France Travail.';
+                resultDetails = 'Utilisation de vos droits CPF avec possibilité d\'abondement par France Travail si vos droits sont insuffisants.';
+                dispositif = 'CPF (Compte Personnel de Formation)';
                 if (are === 'Oui' && formation_duree === '> 40 heures') {
-                    montantInfo = 'AREF possible si formation prescrite par France Travail';
+                    montant = 'AREF possible si formation prescrite par France Travail';
+                    informations.push('Vos droits CPF sont utilisés en premier');
+                    informations.push('France Travail peut abonder si vos droits sont insuffisants');
+                    informations.push('ARE maintenue si formation prescrite et ≥ 40h');
+                } else {
+                    montant = 'Utilisation de vos droits CPF uniquement';
+                    informations.push('Pas de maintien automatique de l\'ARE');
+                    informations.push('Consultez votre conseiller pour les options');
                 }
                 resultType = 'info';
             }
             else if (formation_type === 'Formation Region') {
                 resultTitle = '🌍 Formation Régionale SFER';
-                resultDetails = 'Formation financée à 100% par votre Région.';
+                resultDetails = 'Formation financée à 100% par votre Région. Les bénéficiaires de l\'ARE conservent leur allocation pendant la formation.';
+                dispositif = 'SFER (Se Former pour un Emploi en Région)';
                 if (are === 'Oui') {
-                    montantInfo = 'ARE maintenue pendant la formation';
+                    montant = 'ARE maintenue pendant toute la formation';
+                    conditions = 'Formation labellisée SFER, inscription validée par la Région';
+                    informations.push('Formation entièrement gratuite');
+                    informations.push('ARE conservée sans réduction');
+                    informations.push('Accès aux formations prioritaires de la Région');
                     resultType = 'success';
                 } else {
-                    montantInfo = 'RSFP possible : Rémunération selon barème régional';
+                    montant = 'RSFP possible : rémunération selon barème régional';
+                    conditions = 'Formation labellisée SFER, statut de demandeur d\'emploi';
+                    informations.push('Montants indicatifs : 220€ à 769€/mois selon âge');
+                    informations.push('Formation entièrement gratuite');
+                    informations.push('Accompagnement renforcé possible');
                     resultType = 'info';
                 }
+            }
+            
+            // Information sur les droits ARE
+            if (are === 'Oui' && droits_fin === 'Non') {
+                remarques.push('Si vos droits ARE s\'épuisent pendant la formation, vous pourriez bénéficier de la RFF (Rémunération de Fin de Formation)');
+            } else if (are === 'Oui' && droits_fin === 'Je ne sais pas') {
+                remarques.push('Vérifiez la date de fin de vos droits ARE auprès de France Travail');
             }
             
             // Afficher les résultats
             const resultsContainer = document.getElementById('results-container');
             resultsContainer.innerHTML = `
-                <div class="result-header">
-                    <h2 style="color: var(--primary-color); margin-bottom: 16px; font-size: 24px;">🎯 Résultat de votre simulation</h2>
-                    <h3 style="margin-bottom: 16px; font-size: 20px;">${resultTitle}</h3>
-                    <p style="margin-bottom: 20px; font-size: 16px;">${resultDetails}</p>
-                    ${montantInfo ? `<p style="background: rgba(76, 175, 127, 0.1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--success-color);">
-                        <strong>💰 ${montantInfo}</strong>
-                    </p>` : ''}
-                </div>
-                
-                <div class="info-box">
-                    <h3 style="margin-bottom: 16px; color: var(--text-color);">📋 Détails de votre situation</h3>
-                    <div class="situation-summary">
-                        <div class="situation-item">
-                            <strong>ARE (Allocation chômage) :</strong>
-                            <span>${are}</span>
+                <div id="printable-results">
+                    <div class="result-header">
+                        <h2 style="color: var(--primary-color); margin-bottom: 16px; font-size: 24px;">🎯 Résultat de votre simulation</h2>
+                        <h3 style="margin-bottom: 16px; font-size: 20px;">${resultTitle}</h3>
+                        <p style="margin-bottom: 20px; font-size: 16px; line-height: 1.6;">${resultDetails}</p>
+                    </div>
+                    
+                    <div class="result-details-grid">
+                        ${dispositif ? `
+                        <div class="result-card">
+                            <h4><span>🏛️</span> Dispositif applicable</h4>
+                            <p style="color: var(--text-light); line-height: 1.6; font-size: 15px;">${dispositif}</p>
+                        </div>` : ''}
+                        
+                        ${montant ? `
+                        <div class="result-card">
+                            <h4><span>💰</span> Rémunération</h4>
+                            <p style="color: var(--text-light); line-height: 1.6; font-size: 15px;">${montant}</p>
+                        </div>` : ''}
+                        
+                        ${conditions ? `
+                        <div class="result-card">
+                            <h4><span>📋</span> Conditions</h4>
+                            <p style="color: var(--text-light); line-height: 1.6; font-size: 15px;">${conditions}</p>
+                        </div>` : ''}
+                    </div>
+                    
+                    <div class="${resultType}-box">
+                        <h4 style="margin-bottom: 12px;">📊 Détails de votre situation</h4>
+                        <div class="situation-summary">
+                            <div class="situation-item">
+                                <strong>ARE (Allocation chômage) :</strong>
+                                <span>${are}</span>
+                            </div>
+                            <div class="situation-item">
+                                <strong>Type de formation :</strong>
+                                <span>${formation_type}</span>
+                            </div>
+                            <div class="situation-item">
+                                <strong>Durée de la formation :</strong>
+                                <span>${formation_duree}</span>
+                            </div>
+                            <div class="situation-item">
+                                <strong>Droits ARE :</strong>
+                                <span>${droits_fin || 'Non renseigné'}</span>
+                            </div>
                         </div>
-                        <div class="situation-item">
-                            <strong>Type de formation :</strong>
-                            <span>${formation_type}</span>
-                        </div>
-                        <div class="situation-item">
-                            <strong>Durée de la formation :</strong>
-                            <span>${formation_duree}</span>
-                        </div>
-                        <div class="situation-item">
-                            <strong>Droits ARE :</strong>
-                            <span>${droits_fin || 'Non renseigné'}</span>
-                        </div>
+                        
+                        ${informations.length > 0 ? `
+                        <div style="margin-top: 20px;">
+                            <h4 style="margin-bottom: 12px; color: var(--text-color);">ℹ️ Informations importantes</h4>
+                            <ul style="padding-left: 20px; color: var(--text-light); line-height: 1.7;">
+                                ${informations.map(info => `<li>${info}</li>`).join('')}
+                            </ul>
+                        </div>` : ''}
+                        
+                        ${remarques.length > 0 ? `
+                        <div style="margin-top: 20px;">
+                            <h4 style="margin-bottom: 12px; color: var(--text-color);">💡 Remarques</h4>
+                            <ul style="padding-left: 20px; color: var(--text-light); line-height: 1.7;">
+                                ${remarques.map(rem => `<li>${rem}</li>`).join('')}
+                            </ul>
+                        </div>` : ''}
+                    </div>
+                    
+                    <div class="${resultType === 'success' ? 'success-box' : resultType === 'warning' ? 'warning-box' : 'info-box'}">
+                        <h4 style="margin-bottom: 12px;">🚀 Prochaines étapes</h4>
+                        <ul style="padding-left: 20px; color: var(--text-light); line-height: 1.7;">
+                            <li><strong>1.</strong> Prenez rendez-vous avec votre conseiller France Travail</li>
+                            <li><strong>2.</strong> Préparez votre projet professionnel détaillé</li>
+                            <li><strong>3.</strong> Rassemblez les documents nécessaires (RIB, pièce d'identité, justificatifs)</li>
+                            <li><strong>4.</strong> Actualisez votre situation sur France Travail</li>
+                            <li><strong>5.</strong> Recherchez des formations éligibles dans votre région</li>
+                            <li><strong>6.</strong> Déposez votre dossier complet auprès de votre conseiller</li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="${resultType}-box">
-                    <h4 style="margin-bottom: 12px;">💡 Prochaines étapes</h4>
-                    <ul style="padding-left: 20px; color: var(--text-light); line-height: 1.7;">
-                        <li>Prenez rendez-vous avec votre conseiller France Travail</li>
-                        <li>Préparez votre projet professionnel détaillé</li>
-                        <li>Rassemblez les documents nécessaires (RIB, pièce d'identité, justificatifs)</li>
-                        <li>Actualisez votre situation sur France Travail</li>
-                        <li>Recherchez des formations éligibles</li>
-                    </ul>
-                    ${conditions ? `<p style="margin-top: 16px; padding: 12px; background: rgba(217, 166, 108, 0.1); border-radius: 6px; border-left: 3px solid var(--warning-color);">
-                        <strong>⚠️ ${conditions}</strong>
-                    </p>` : ''}
+                <div class="button-group">
+                    <button class="print-btn" onclick="printResults()">
+                        <span>🖨️</span> Imprimer / Sauvegarder en PDF
+                    </button>
+                    <button class="download-btn" onclick="downloadAsText()">
+                        <span>📄</span> Télécharger en texte
+                    </button>
                 </div>
                 
-                <button class="download-btn" onclick="downloadResults()">
-                    <span>📄</span> Télécharger le résultat en PDF
-                </button>
+                <div class="info-box">
+                    <h4 style="margin-bottom: 12px;">📞 Contact et informations complémentaires</h4>
+                    <p style="color: var(--text-light); line-height: 1.6;">
+                        Pour toute question ou pour finaliser votre dossier, contactez votre conseiller France Travail ou appelez le <strong>3949</strong> (service gratuit).
+                        <br><br>
+                        <strong>Important :</strong> Ces informations sont indicatives. Seul votre conseiller France Travail peut valider définitivement votre éligibilité et les montants exacts.
+                    </p>
+                </div>
             `;
             
             // Faire défiler jusqu'aux résultats
             resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
-        // Fonction pour télécharger les résultats (simulée pour l'instant)
-        function downloadResults() {
-            alert('La génération de PDF nécessite la bibliothèque jsPDF. Pour le moment, vous pouvez faire une capture d\'écran ou imprimer la page (Ctrl+P).');
-            // Pour une vraie implémentation PDF, vous pouvez intégrer jsPDF
-            // generatePDF();
+        // Fonction pour imprimer ou sauvegarder en PDF
+        function printResults() {
+            window.print();
+        }
+        
+        // Fonction pour télécharger en texte
+        function downloadAsText() {
+            const resultsElement = document.getElementById('printable-results');
+            if (!resultsElement) {
+                alert('Aucun résultat à télécharger.');
+                return;
+            }
+            
+            // Récupérer le texte brut
+            let textContent = "=== RÉSULTAT DE SIMULATION - FRANCE TRAVAIL ===\n\n";
+            textContent += "🎯 Résultat de votre simulation\n";
+            
+            // Récupérer les titres
+            const titles = resultsElement.querySelectorAll('h2, h3, h4');
+            titles.forEach(title => {
+                if (title.tagName === 'H2') textContent += "\n" + title.textContent + "\n";
+                else if (title.tagName === 'H3') textContent += "\n" + title.textContent + "\n";
+                else if (title.tagName === 'H4') textContent += "\n" + title.textContent + "\n";
+            });
+            
+            // Récupérer les paragraphes
+            const paragraphs = resultsElement.querySelectorAll('p');
+            paragraphs.forEach(p => {
+                textContent += p.textContent + "\n";
+            });
+            
+            // Récupérer les listes
+            const lists = resultsElement.querySelectorAll('li');
+            lists.forEach(li => {
+                textContent += "• " + li.textContent + "\n";
+            });
+            
+            textContent += "\n=== FIN DU RAPPORT ===\n";
+            textContent += "Généré le: " + new Date().toLocaleDateString('fr-FR');
+            textContent += "\nSource: Application Simulation France Travail";
+            
+            // Créer et télécharger le fichier
+            const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `simulation_france_travail_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         }
     </script>
 </body>
