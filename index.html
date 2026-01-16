@@ -3,193 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎓 Simulation Rémunération Formation</title>
+    <title>🎓 Simulation Rémunération Formation - France Travail</title>
     <style>
-        /* Variables CSS France Travail */
-        /* =====================================
-        Variables globales
-        ===================================== */
+        /* Variables CSS France Travail - Palette élégante */
         :root {
             --primary-color: #5A7D9A;
+            --primary-light: #7C9DBB;
+            --primary-dark: #3A5F7A;
             --secondary-color: #8FA6B3;
             --success-color: #4CAF7F;
+            --success-light: #6DC99E;
             --info-color: #6CA0DC;
             --warning-color: #D9A66C;
-            --text-color: #EAEAEA;
-            --bg-color: #1E1E2E;
-            --card-bg: #2A2A3D;
-            --border-color: #3A3A50;
-            --sidebar-width: 280px;
-        }
-
-        .light-theme {
-            --text-color: #1E1E2E;
-            --bg-color: #F5F5F7;
+            --text-color: #2C3E50;
+            --text-light: #5D6D7E;
+            --bg-color: #F8FAFC;
             --card-bg: #FFFFFF;
-            --border-color: #D1D1D6;
+            --border-color: #E3E8F0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --sidebar-width: 280px;
         }
 
         .dark-theme {
             --text-color: #EAEAEA;
+            --text-light: #B0B0B0;
             --bg-color: #1E1E2E;
             --card-bg: #2A2A3D;
             --border-color: #3A3A50;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.25);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.3);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Marianne, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-        }
-
-        /* =====================================
-        Container principal
-        ===================================== */
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
             min-height: 100vh;
-            padding: 2rem;
-            gap: 2rem;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* =====================================
-        Sidebar
-        ===================================== */
+        /* Layout principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 24px;
+        }
+
+        /* Sidebar élégante */
         .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 20px;
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow-md);
+            height: fit-content;
             position: sticky;
-            top: 2rem;
-            height: auto;
-        }
-
-        .sidebar h3 {
-            color: var(--primary-color);
-            margin: 1.5rem 0 0.5rem 0;
-            font-size: 1.1rem;
-        }
-
-        .sidebar hr {
-            border: none;
-            border-top: 1px solid var(--border-color);
-            margin: 1rem 0;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .sidebar li {
-            margin: 0.5rem 0;
+            top: 20px;
+            backdrop-filter: blur(10px);
         }
 
         .theme-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            margin: 1rem 0;
+            gap: 8px;
+            margin: 16px 0;
         }
 
         .theme-btn {
-            padding: 0.6rem;
+            padding: 10px 12px;
             border: 2px solid var(--border-color);
             background: var(--card-bg);
             color: var(--text-color);
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
-        .theme-btn:hover, .theme-btn.active {
-            background: var(--primary-color);
-            color: #fff;
+        .theme-btn:hover {
             border-color: var(--primary-color);
+            transform: translateY(-1px);
         }
 
-        /* =====================================
-        Main content
-        ===================================== */
-        .main-content {
-            max-width: 900px;
-            width: 100%;
+        .theme-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
         }
 
-        /* Header */
+        /* Header principal */
         .main-header {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 20px;
-            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-lg);
+            color: white;
             text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
 
-        .main-header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .main-header h3 {
-            font-size: 1.2rem;
-            opacity: 0.8;
-        }
-
-        /* =====================================
-        Tabs
-        ===================================== */
+        /* Navigation par onglets */
         .tabs {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            box-shadow: var(--shadow-sm);
         }
 
         .tab {
-            padding: 1rem 1.5rem;
-            border-radius: 12px 12px 0 0;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            flex: 1;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
             cursor: pointer;
-            color: var(--text-color);
-            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .tab:hover {
-            background: rgba(92, 125, 154, 0.1);
+            color: var(--primary-color);
+            background: rgba(90, 125, 154, 0.05);
         }
 
         .tab.active {
-            background: var(--primary-color);
-            color: #fff;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            color: var(--primary-color);
+            background: var(--card-bg);
         }
 
-        /* Contenu des tabs */
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* Contenu des onglets */
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s ease;
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
         }
 
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.4s ease;
         }
 
         @keyframes fadeIn {
@@ -197,701 +192,399 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* =====================================
-        FORMULAIRE COMPACT (TAILLES RÉDUITES)
-        ===================================== */
-        #tab-0 .form-container {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 16px;
+        /* Formulaire élégant */
+        .form-container {
+            background: linear-gradient(135deg, rgba(90, 125, 154, 0.03) 0%, rgba(90, 125, 154, 0.01) 100%);
+            padding: 28px;
+            border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
         }
 
-        #tab-0 .form-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            gap: 1.2rem;
-            margin-bottom: 1.2rem;
-            padding: 0.9rem;
-            background: rgba(92, 125, 154, 0.03);
-            border-radius: 12px;
+        .form-group {
+            margin-bottom: 28px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
             transition: all 0.2s ease;
             position: relative;
         }
 
-        #tab-0 .form-group:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 2px 6px rgba(92, 125, 154, 0.08);
+        .form-group:hover {
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-sm);
         }
 
-        #tab-0 .form-group::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary-color), #8FA6B3);
-            border-radius: 1.5px;
-        }
-
-        #tab-0 .form-group label {
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
             font-weight: 600;
             color: var(--text-color);
-            font-size: 0.9rem;
-            padding: 0.3rem 0;
-            line-height: 1.4;
+            font-size: 15px;
         }
 
-        /* Options radio inline compactes */
-        #tab-0 .inline-options {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            flex-wrap: wrap;
+        .form-group label::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
         }
 
-        #tab-0 .inline-option {
+        /* Groupes de boutons radio */
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .radio-option label {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            padding: 0.5rem 0.8rem;
+            justify-content: center;
+            padding: 14px 16px;
             background: var(--card-bg);
-            border: 1.5px solid var(--border-color);
-            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
             transition: all 0.2s ease;
-            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            margin: 0;
         }
 
-        #tab-0 .inline-option:hover {
+        .radio-option label::before {
+            display: none;
+        }
+
+        .radio-option input[type="radio"]:checked + label {
+            background: var(--primary-color);
+            color: white;
             border-color: var(--primary-color);
-            background: rgba(92, 125, 154, 0.05);
+            box-shadow: 0 2px 8px rgba(90, 125, 154, 0.2);
         }
 
-        #tab-0 .inline-option input[type="radio"] {
-            margin: 0;
-            width: 14px;
-            height: 14px;
-            accent-color: var(--primary-color);
-            cursor: pointer;
+        .radio-option label:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-1px);
         }
 
-        #tab-0 .inline-option label {
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Select compact */
-        #tab-0 .select-group {
-            position: relative;
-            justify-self: end;
+        /* Select stylé */
+        select {
             width: 100%;
-            max-width: 250px;
-        }
-
-        #tab-0 .select-group select {
-            padding: 0.6rem 0.8rem;
+            padding: 14px 16px;
             background: var(--card-bg);
-            border: 1.5px solid var(--border-color);
-            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
             color: var(--text-color);
-            font-size: 0.85rem;
-            width: 100%;
-            font-weight: 500;
+            font-size: 14px;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%235A7D9A' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 0.8rem center;
-            background-size: 10px;
-            padding-right: 2.2rem;
-            transition: all 0.2s ease;
+            background-position: right 16px center;
+            background-size: 12px;
+            padding-right: 40px;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        #tab-0 .select-group select:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(92, 125, 154, 0.1);
+        select:hover {
+            border-color: var(--primary-light);
         }
 
-        #tab-0 .select-group select:focus {
+        select:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(92, 125, 154, 0.15);
+            box-shadow: 0 0 0 3px rgba(90, 125, 154, 0.1);
         }
 
-        /* Grille radio compacte */
-        #tab-0 .radio-grid-container {
-            justify-self: end;
+        /* Bouton de soumission */
+        .submit-btn {
             width: 100%;
-            max-width: 350px;
-        }
-
-        #tab-0 .radio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 0.5rem;
-        }
-
-        #tab-0 .radio-option {
-            padding: 0.6rem 0.5rem;
-            background: var(--card-bg);
-            border: 1.5px solid var(--border-color);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-weight: 500;
-            font-size: 0.8rem;
-            min-height: 42px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #tab-0 .radio-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(to right, var(--primary-color), #8FA6B3);
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        #tab-0 .radio-option:hover {
-            border-color: var(--primary-color);
-            background: rgba(92, 125, 154, 0.05);
-        }
-
-        #tab-0 .radio-option:hover::before {
-            opacity: 1;
-        }
-
-        #tab-0 .radio-option input[type="radio"] {
-            margin-right: 0.4rem;
-            width: 13px;
-            height: 13px;
-            accent-color: var(--primary-color);
-            cursor: pointer;
-        }
-
-        /* Grille spéciale pour la dernière question */
-        #tab-0 .form-group:last-child .radio-grid {
-            grid-template-columns: repeat(4, 1fr);
-        }
-
-        /* Bouton submit compact */
-        #tab-0 .submit-btn {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #4A6B8A 100%);
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
             border: none;
-            padding: 0.9rem 1.5rem;
-            border-radius: 10px;
-            font-size: 0.95rem;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(92, 125, 154, 0.25);
-            width: 100%;
-            margin-top: 1rem;
+            margin-top: 8px;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 10px;
             letter-spacing: 0.3px;
         }
 
-        #tab-0 .submit-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(92, 125, 154, 0.35);
-            background: linear-gradient(135deg, #4A6B8A 0%, var(--primary-color) 100%);
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
         }
 
-        #tab-0 .submit-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 10px rgba(92, 125, 154, 0.25);
-        }
-
-        /* =====================================
-        STYLE UNIFORME POUR LES RÉSULTATS
-        ===================================== */
-        #tab-0 .result-header {
-            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(92, 125, 154, 0.05) 100%);
-            padding: 1.8rem;
-            border-radius: 16px;
+        /* Résultats */
+        .result-header {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(90, 125, 154, 0.05) 100%);
+            padding: 28px;
+            border-radius: var(--radius-md);
+            margin: 24px 0;
+            border: 1px solid var(--border-color);
             text-align: center;
-            margin: 1.5rem 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid var(--border-color);
-            font-family: Marianne, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
-        #tab-0 .result-header h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.8rem;
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        #tab-0 .result-header h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.8rem;
-            color: var(--text-color);
-            font-weight: 600;
-        }
-
-        #tab-0 .result-header p {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: var(--text-color);
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Section détails */
-        #tab-0 .simulation-details {
+        .info-box, .success-box, .warning-box {
             background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 16px;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            font-family: Marianne, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-        }
-
-        #tab-0 .simulation-details h3 {
-            font-size: 1.1rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 600;
-            padding-bottom: 0.6rem;
-            border-bottom: 1.5px solid var(--border-color);
-        }
-
-        /* Boxes d'information enrichies */
-        #tab-0 .info-box,
-        #tab-0 .success-box,
-        #tab-0 .warning-box {
-            padding: 1.2rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            font-family: Marianne, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-        }
-
-        #tab-0 .info-box h4,
-        #tab-0 .success-box h4,
-        #tab-0 .warning-box h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        #tab-0 .info-box p,
-        #tab-0 .success-box p,
-        #tab-0 .warning-box p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: var(--text-color);
-            margin-bottom: 0.8rem;
-        }
-
-        #tab-0 .info-box ul,
-        #tab-0 .success-box ul,
-        #tab-0 .warning-box ul {
-            padding-left: 1.5rem;
-            margin: 0.8rem 0;
-        }
-
-        #tab-0 .info-box li,
-        #tab-0 .success-box li,
-        #tab-0 .warning-box li {
-            margin-bottom: 0.4rem;
-            font-size: 0.88rem;
-            line-height: 1.5;
-        }
-
-        #tab-0 .info-box strong,
-        #tab-0 .success-box strong,
-        #tab-0 .warning-box strong {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        #tab-0 .info-box {
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            margin: 16px 0;
             border-left: 4px solid var(--info-color);
-            background: linear-gradient(135deg, rgba(108, 160, 220, 0.08) 0%, rgba(108, 160, 220, 0.02) 100%);
+            border: 1px solid var(--border-color);
         }
 
-        #tab-0 .success-box {
-            border-left: 4px solid var(--success-color);
-            background: linear-gradient(135deg, rgba(76, 175, 127, 0.08) 0%, rgba(76, 175, 127, 0.02) 100%);
+        .success-box {
+            border-left-color: var(--success-color);
         }
 
-        #tab-0 .warning-box {
-            border-left: 4px solid var(--warning-color);
-            background: linear-gradient(135deg, rgba(217, 166, 108, 0.08) 0%, rgba(217, 166, 108, 0.02) 100%);
+        .warning-box {
+            border-left-color: var(--warning-color);
         }
 
-        /* Section montants */
-        #tab-0 .montant-details {
-            background: var(--card-bg);
-            padding: 1.2rem;
-            border-radius: 10px;
-            margin: 0.8rem 0;
-            border: 1px dashed var(--border-color);
-        }
-
-        #tab-0 .montant-details h5 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--success-color);
-            margin-bottom: 0.5rem;
-        }
-
-        #tab-0 .montant-details p {
-            font-size: 0.88rem;
-            line-height: 1.5;
-            color: var(--text-color);
-        }
-
-        /* Bouton télécharger compact */
-        #tab-0 .download-btn {
-            background: linear-gradient(135deg, var(--success-color) 0%, #3D8F66 100%);
-            color: white;
-            border: none;
-            padding: 0.9rem 1.5rem;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(76, 175, 127, 0.25);
-            width: 100%;
-            margin: 1.5rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            letter-spacing: 0.3px;
-        }
-
-        #tab-0 .download-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(76, 175, 127, 0.35);
-            background: linear-gradient(135deg, #3D8F66 0%, var(--success-color) 100%);
-        }
-
-        /* Section résumé de situation */
-        #tab-0 .situation-summary {
+        .situation-summary {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.8rem;
-            margin: 1rem 0;
+            gap: 16px;
+            margin: 20px 0;
         }
 
-        #tab-0 .situation-item {
+        .situation-item {
             background: var(--card-bg);
-            padding: 0.9rem;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
             transition: all 0.2s ease;
         }
 
-        #tab-0 .situation-item:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        .situation-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
         }
 
-        #tab-0 .situation-item strong {
-            color: var(--primary-color);
+        .download-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--success-color), var(--success-light));
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
             font-weight: 600;
-            display: block;
-            margin-bottom: 0.3rem;
-            font-size: 0.85rem;
+            cursor: pointer;
+            margin: 24px 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        #tab-0 .situation-item span {
-            color: var(--text-color);
-            font-size: 0.9rem;
-            font-weight: 500;
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            background: linear-gradient(135deg, var(--success-light), var(--success-color));
         }
 
-        /* =====================================
-        Footer
-        ===================================== */
+        /* Footer */
         .footer {
             text-align: center;
-            padding: 1.5rem;
-            color: var(--text-color);
-            opacity: 0.7;
-            font-size: 0.8rem;
-            margin-top: 2rem;
+            padding: 24px;
+            color: var(--text-light);
+            font-size: 14px;
+            margin-top: 32px;
             border-top: 1px solid var(--border-color);
         }
 
-        /* =====================================
-        Responsive
-        ===================================== */
-        @media (max-width: 1100px) {
-            #tab-0 .form-group {
+        /* Responsive */
+        @media (max-width: 900px) {
+            .container {
                 grid-template-columns: 1fr;
-                gap: 0.8rem;
             }
             
-            #tab-0 .inline-options,
-            #tab-0 .select-group,
-            #tab-0 .radio-grid-container {
-                justify-self: start;
+            .sidebar {
+                position: static;
+                margin-bottom: 20px;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
                 width: 100%;
-                max-width: 100%;
             }
             
-            #tab-0 .inline-options {
-                justify-content: flex-start;
-            }
-            
-            #tab-0 .form-group:last-child .radio-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .radio-group {
+                grid-template-columns: 1fr;
             }
         }
 
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-                padding: 1rem;
-                gap: 1rem;
-            }
-
-            .sidebar {
-                width: 100%;
-                top: 0;
-                padding: 1.2rem;
-            }
-
-            .main-content {
-                width: 100%;
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
             }
             
-            .main-header {
-                padding: 1.2rem;
-            }
-
-            .main-header h1 {
-                font-size: 1.6rem;
-            }
-
-            .main-header h3 {
-                font-size: 1rem;
-            }
-
-            .tabs {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.4rem;
-            }
-
-            .tab {
-                width: 100%;
-                padding: 0.8rem;
-                font-size: 0.9rem;
+            .main-header, .tab-content, .sidebar {
+                padding: 20px;
             }
             
-            #tab-0 .form-container {
-                padding: 1.2rem;
-            }
-            
-            #tab-0 .form-group {
-                padding: 0.8rem;
-            }
-            
-            #tab-0 .form-group:last-child .radio-grid {
+            .situation-summary {
                 grid-template-columns: 1fr;
             }
             
-            #tab-0 .inline-options {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            #tab-0 .inline-option {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            #tab-0 .radio-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            #tab-0 .result-header {
-                padding: 1.2rem;
-            }
-
-            #tab-0 .result-header h2 {
-                font-size: 1.3rem;
-            }
-
-            #tab-0 .result-header h3 {
-                font-size: 1.1rem;
-            }
-            
-            #tab-0 .situation-summary {
-                grid-template-columns: 1fr;
+            .form-group {
+                padding: 16px;
             }
         }
     </style>
 </head>
-
 <body class="light-theme">
     <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <h3>🏛️ France Travail</h3>
-            <hr>
+            <h3 style="color: var(--primary-color); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
+                <span>🏛️</span> France Travail
+            </h3>
             
-            <h3>🌓 Mode d'affichage</h3>
-            <div class="theme-buttons">
-                <button class="theme-btn active" onclick="setTheme('light', this)">☀️ Clair</button>
-                <button class="theme-btn" onclick="setTheme('dark', this)">🌙 Sombre</button>
+            <div style="margin-bottom: 28px;">
+                <h4 style="margin-bottom: 12px; color: var(--text-color); font-size: 15px;">🌓 Mode d'affichage</h4>
+                <div class="theme-buttons">
+                    <button class="theme-btn active" onclick="setTheme('light')">
+                        <span>☀️</span> Clair
+                    </button>
+                    <button class="theme-btn" onclick="setTheme('dark')">
+                        <span>🌙</span> Sombre
+                    </button>
+                </div>
+                <p style="margin-top: 12px; font-size: 14px; color: var(--text-light);">
+                    <strong>Thème :</strong> <span id="current-theme">Clair</span>
+                </p>
             </div>
-            <p><strong>Thème actuel :</strong> <span id="current-theme">☀️ Mode clair</span></p>
             
-            <hr>
-            <h3>📞 Contacts utiles</h3>
-            <p><strong>France Travail</strong><br>
-            📞 3949 (appel non surtaxé)<br>
-            🌐 <a href="https://www.francetravail.fr" target="_blank" style="color: var(--primary-color);">francetravail.fr</a></p>
-            <br>
-            <p><strong>Formation Région </strong><br>
-            🚨 Si le candidat à l'ASS 🚨 <br> Merci de contacter la GDD, afin d'éviter les trop-perçus </p>
+            <div style="margin-bottom: 28px;">
+                <h4 style="margin-bottom: 12px; color: var(--text-color); font-size: 15px;">📞 Contacts utiles</h4>
+                <div style="font-size: 14px; line-height: 1.6; color: var(--text-light);">
+                    <p><strong>France Travail</strong></p>
+                    <p style="margin: 8px 0;">📞 3949 (gratuit)</p>
+                    <p>🌐 <a href="https://www.francetravail.fr" target="_blank" style="color: var(--primary-color); text-decoration: none;">francetravail.fr</a></p>
+                </div>
+            </div>
             
-            <h3>📋 Documents utiles</h3>
-            <ul>
-                <li>RIB et justificatifs</li>
-                <li>Pièce d'identité</li>
-            </ul>
-            
-            <hr>
+            <div>
+                <h4 style="margin-bottom: 12px; color: var(--text-color); font-size: 15px;">📋 Documents utiles</h4>
+                <ul style="font-size: 14px; padding-left: 20px; color: var(--text-light); line-height: 1.8;">
+                    <li>RIB à jour</li>
+                    <li>Pièce d'identité</li>
+                    <li>Justificatif de domicile</li>
+                    <li>Dernier avis de situation</li>
+                </ul>
+            </div>
         </aside>
         
         <!-- Main Content -->
-        <main class="main-content">
+        <main>
             <!-- Header -->
             <div class="main-header">
-                <h1>🎓 Simulation & Informations – Aides à la Formation</h1>
-                <h3>France Travail • Régions • Dispositif SFER</h3>
+                <h1 style="margin-bottom: 12px; font-size: 28px;">🎓 Simulation & Informations – Aides à la Formation</h1>
+                <p style="opacity: 0.9; font-size: 16px;">France Travail • Régions • Dispositif SFER</p>
             </div>
             
             <!-- Tabs -->
             <div class="tabs">
-                <button class="tab active" onclick="switchTab(0)">🎯 Simulation de rémunération</button>
+                <button class="tab active" onclick="switchTab(0)">🎯 Simulation</button>
                 <button class="tab" onclick="switchTab(1)">📘 Formations</button>
                 <button class="tab" onclick="switchTab(2)">💶 Rémunérations</button>
-                <button class="tab" onclick="switchTab(3)">🌍 Dispositif SFER</button>
+                <button class="tab" onclick="switchTab(3)">🌍 SFER</button>
                 <button class="tab" onclick="switchTab(4)">📝 AIF & POE</button>
             </div>
             
-            <!-- Tab 1: Simulation -->
+            <!-- Tab 0: Simulation -->
             <div id="tab-0" class="tab-content active">
-                <h2 style="margin-bottom: 1rem; font-size: 1.2rem; color: var(--primary-color);">🧭 Simulation personnalisée</h2>
+                <h2 style="margin-bottom: 24px; color: var(--primary-color); font-size: 22px;">🧭 Simulation personnalisée</h2>
                 
                 <form id="simulation-form" class="form-container">
                     <!-- Question 1: ARE -->
                     <div class="form-group">
-                        <label>Percevez-vous actuellement l'ARE (Allocation chômage) ?</label>
-                        <div class="inline-options">
-                            <div class="inline-option">
+                        <label>1. Percevez-vous actuellement l'ARE (Allocation chômage) ?</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
                                 <input type="radio" name="are" id="are_oui" value="Oui" required>
                                 <label for="are_oui">Oui</label>
                             </div>
-                            <div class="inline-option">
+                            <div class="radio-option">
                                 <input type="radio" name="are" id="are_non" value="Non" required>
                                 <label for="are_non">Non</label>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Question 2: RSA -->
+                    <!-- Question 2: Type de formation -->
                     <div class="form-group">
-                        <label>Percevez-vous actuellement le RSA (Revenu de Solidarité Active) ?</label>
-                        <div class="inline-options">
-                            <div class="inline-option">
-                                <input type="radio" name="rsa" id="rsa_oui" value="Oui" required>
-                                <label for="rsa_oui">Oui</label>
-                            </div>
-                            <div class="inline-option">
-                                <input type="radio" name="rsa" id="rsa_non" value="Non" required>
-                                <label for="rsa_non">Non</label>
-                            </div>
-                        </div>
+                        <label>2. Type de formation envisagée :</label>
+                        <select name="formation_type" required>
+                            <option value="">Sélectionnez une option</option>
+                            <option value="POE">POE (Préparation Opérationnelle à l'Emploi)</option>
+                            <option value="AIF">Aide Individuelle à la Formation (AIF)</option>
+                            <option value="CPF">Formation via Mon Compte Personnel de Formation (CPF)</option>
+                            <option value="Formation Region">Formation financée par la Région (ex : SFER)</option>
+                        </select>
                     </div>
                     
-                    <!-- Question 3: Type de formation -->
+                    <!-- Question 3: Durée formation -->
                     <div class="form-group">
-                        <label>Type de formation envisagée :</label>
-                        <div class="select-group">
-                            <select name="formation_type" required>
-                                <option value="">Sélectionnez une option</option>
-                                <option value="POE">POE (Préparation Opérationnelle à l'Emploi)</option>
-                                <option value="AIF">Aide Individuelle à la Formation (AIF)</option>
-                                <option value="CPF">Formation via Mon Compte Personnel de Formation (CPF)</option>
-                                <option value="Formation Région (ex : SFER)">Formation financée par la Région (ex : SFER)</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <!-- Question 4: Durée formation -->
-                    <div class="form-group">
-                        <label>Durée de la formation :</label>
-                        <div class="radio-grid-container">
-                            <div class="radio-grid">
-                                <label class="radio-option">
-                                    <input type="radio" name="formation_duree" value="> 40 heures" required> > 40 heures
-                                </label>
-                                <label class="radio-option">
-                                    <input type="radio" name="formation_duree" value="≤ 40 heures" required> ≤ 40 heures
-                                </label>
+                        <label>3. Durée de la formation :</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" name="formation_duree" id="duree_moins" value="≤ 40 heures" required>
+                                <label for="duree_moins">≤ 40 heures</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="formation_duree" id="duree_plus" value="> 40 heures" required>
+                                <label for="duree_plus">> 40 heures</label>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Question 5: Droits ARE -->
+                    <!-- Question 4: Droits ARE -->
                     <div class="form-group">
-                        <label>Si vous percevez l'ARE, vos droits couvrent-ils toute la durée de la formation ?</label>
-                        <div class="radio-grid-container">
-                            <div class="radio-grid" style="grid-template-columns: repeat(4, 1fr);">
-                                <label class="radio-option">
-                                    <input type="radio" name="droits_fin" value="Oui"> Oui
-                                </label>
-                                <label class="radio-option">
-                                    <input type="radio" name="droits_fin" value="Non"> Non
-                                </label>
-                                <label class="radio-option">
-                                    <input type="radio" name="droits_fin" value="Je ne sais pas"> Je ne sais pas
-                                </label>
-                                <label class="radio-option">
-                                    <input type="radio" name="droits_fin" value="Non concerné"> Non concerné
-                                </label>
+                        <label>4. Si vous percevez l'ARE, vos droits couvrent-ils toute la durée de la formation ?</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" name="droits_fin" id="droits_oui" value="Oui">
+                                <label for="droits_oui">Oui</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="droits_fin" id="droits_non" value="Non">
+                                <label for="droits_non">Non</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="droits_fin" id="droits_inconnu" value="Je ne sais pas">
+                                <label for="droits_inconnu">Je ne sais pas</label>
                             </div>
                         </div>
                     </div>
@@ -904,920 +597,259 @@
                 <div id="results-container"></div>
             </div>
             
-            <!-- Tab 2: Formations -->
+            <!-- Tab 1: Formations -->
             <div id="tab-1" class="tab-content">
-                <h2>🎓 Formations (France Travail & Région)</h2>
-                <div class="info-box">
-                    <h3>🧍‍♂️ À qui s'adressent-elles ?</h3>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>En tant que demandeur d'emploi, vous pouvez suivre une formation agréée par France Travail.</li>
-                        <li>Les formations peuvent être financées ou co-financées par la <strong>Région</strong> ou l'<strong>État</strong>.</li>
-                        <li>Elles s'inscrivent dans votre <strong>Projet Personnel d'Accès à l'Emploi (PPAE)</strong>.</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;">🏗️ Typologie et conditions</h3>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li><strong>POE (Préparation Opérationnelle à l'Emploi)</strong> : Formation individuelle (POEI) ou collective (POEC) pour un poste précis ou un métier en tension.</li>
-                        <li><strong>CPF (Compte Personnel de Formation)</strong> : Utilisation de vos droits personnels, avec possibilité d'abondement par France Travail.</li>
-                        <li><strong>AIF (Aide Individuelle à la Formation)</strong> : Financement direct par France Travail après étude de votre dossier.</li>
-                        <li><strong>Formation Régionale</strong> : financée par le Conseil régional, souvent labellisée SFER.</li>
-                        <li>Une formation doit durer <strong>au moins 40 heures</strong> pour certaines rémunérations.</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;">🎯 Objectifs</h3>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Acquérir de nouvelles compétences, se reconvertir ou renforcer son employabilité.</li>
-                        <li>Souvent orientées vers des <strong>métiers en tension</strong> (via la Région ou France Travail).</li>
-                        <li>POE : préparer une embauche spécifique dans une entreprise partenaire.</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Tab 3: Rémunérations -->
-            <div id="tab-2" class="tab-content">
-                <h2>💶 Rémunérations pendant ou après formation</h2>
-                <div class="info-box">
-                    <h3>Principaux dispositifs :</h3>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li><strong>AREF</strong> : Maintien de l'ARE pendant la formation (si ≥ 40h et prescrite par France Travail).</li>
-                        <li><strong>RFF (Rémunération de Fin de Formation)</strong> : si vos droits ARE/ASP ne couvrent pas toute la durée de la formation.</li>
-                        <li><strong>RFFT (Rémunération de Formation France Travail)</strong> : pour les non-indemnisés.</li>
-                        <li><strong>RSFP (Rémunération des Stagiaires de la Formation Professionnelle)</strong> : via la Région ou l'État.</li>
-                        <li><strong>Rémunération POE</strong> : maintien de l'ARE ou allocation France Travail selon le type de POE.</li>
-                        <li>Autres : ARE-F, ASP-F, ATI-F selon situation.</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;"><strong>📊 Pour les montants actualisés et barèmes en vigueur :</strong></h3>
-
-                    <a href="https://votresite.fr/remunerations" target="_blank" style="color: var(--primary-color);">Consultez notre page dédiée aux rémunérations</a></p>
-                    
-                    <h3 style="margin-top: 1.5rem;">🚗 Autres aides :</h3>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Aides à la mobilité, hébergement, repas selon situation.</li>
-                        <li>Le versement débute après l'attestation d'entrée en formation.</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Tab 4: SFER -->
-            <div id="tab-3" class="tab-content">
-                <h2>🌍 Dispositif SFER – Se Former pour un Emploi en Région (Hauts-de-France)</h2>
-                <div class="info-box">
-                    <h3>🎯 Objectif</h3>
-                    <p>Le <strong>SFER</strong> remplace le <strong>Programme Régional de Formation (PRF)</strong>.<br>
-                    Il permet aux demandeurs d'emploi d'accéder à des <strong>formations financées à 100% par la Région</strong>.</p>
-                    
-                    <h3 style="margin-top: 1.5rem;">👥 Publics concernés</h3>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Demandeurs d'emploi majeurs inscrits à France Travail.</li>
-                        <li>Salariés en contrat aidé ou à temps partiel (&lt;24h/semaine).</li>
-                        <li>Personnes en reconversion selon les cas.</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;">🧭 Parcours proposés</h3>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li><strong>Découverte</strong> : définir ou confirmer un projet professionnel.</li>
-                        <li><strong>Qualifiant</strong> : formation certifiante orientée métier.</li>
-                        <li><strong>Perfectionnement</strong> : modules courts pour renforcer les compétences.</li>
-                        <li><strong>Filières d'avenir</strong> : secteurs stratégiques (industrie, électromobilité, bâtiment durable…).</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;">💶 Financement & rémunération</h3>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Financement intégral par la <strong>Région Hauts-de-France</strong>.</li>
-                        <li>Gratuit pour le demandeur d'emploi.</li>
-                        <li>Les indemnisés continuent à percevoir leur <strong>ARE</strong> pendant la formation.</li>
-                        <li>Les non-indemnisés peuvent percevoir une <strong>indemnisation ASP</strong>, selon critères.</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;">📝 Démarches & conseils</h3>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Être inscrit à France Travail.</li>
-                        <li>Avoir un projet professionnel validé.</li>
-                        <li>Vérifier que la formation est <strong>labellisée SFER</strong> et financée par la Région.</li>
-                        <li>Respecter l'assiduité et déclarer sa situation chaque mois.</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Tab 5: AIF & POE -->
-            <div id="tab-4" class="tab-content">
-                <h2>📝 AIF & POE - Dispositifs France Travail</h2>
+                <h2 style="color: var(--primary-color); margin-bottom: 24px; font-size: 22px;">🎓 Formations (France Travail & Région)</h2>
                 
                 <div class="info-box">
-                    <h3>🎯 POE - Préparation Opérationnelle à l'Emploi</h3>
-                    <p>La POE signifie <strong>Préparation Opérationnelle à l'Emploi</strong>. C'est un dispositif de formation piloté par France Travail qui permet d'acquérir rapidement les compétences nécessaires pour occuper un poste précis.</p>
-                    
-                    <h4 style="margin-top: 1.5rem;">1️⃣ POEI – Préparation Opérationnelle à l'Emploi Individuelle</h4>
-                    <p><strong>🎯 Objectif :</strong> Former une personne pour un poste précis dans une entreprise identifiée.</p>
-                    <p><strong>👥 Pour qui ?</strong></p>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                    <h3 style="margin-bottom: 16px; color: var(--text-color);">🧍‍♂️ À qui s'adressent-elles ?</h3>
+                    <ul style="padding-left: 20px; margin-bottom: 24px; color: var(--text-light); line-height: 1.7;">
                         <li>Demandeurs d'emploi inscrits à France Travail</li>
-                        <li>Bénéficiaires du RSA, ASS, AREF, etc.</li>
+                        <li>Formations agréées par France Travail ou la Région</li>
+                        <li>S'inscrivent dans votre Projet Personnel d'Accès à l'Emploi (PPAE)</li>
+                    </ul>
+                    
+                    <h3 style="margin-bottom: 16px; color: var(--text-color);">🏗️ Typologie et conditions</h3>
+                    <ul style="padding-left: 20px; color: var(--text-light); line-height: 1.7;">
+                        <li><strong>POE (Préparation Opérationnelle à l'Emploi)</strong> : individuelle ou collective</li>
+                        <li><strong>CPF</strong> : Utilisation de vos droits personnels</li>
+                        <li><strong>AIF</strong> : Financement direct par France Travail</li>
+                        <li><strong>Formation Régionale</strong> : financée par le Conseil régional</li>
+                        <li>Durée minimale de 40 heures pour certaines rémunérations</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Tab 2: Rémunérations -->
+            <div id="tab-2" class="tab-content">
+                <h2 style="color: var(--primary-color); margin-bottom: 24px; font-size: 22px;">💶 Rémunérations pendant ou après formation</h2>
+                
+                <div class="info-box">
+                    <h3 style="margin-bottom: 16px; color: var(--text-color);">Principaux dispositifs :</h3>
+                    <ul style="padding-left: 20px; margin-bottom: 24px; color: var(--text-light); line-height: 1.7;">
+                        <li><strong>AREF</strong> : Maintien de l'ARE pendant la formation (si ≥ 40h)</li>
+                        <li><strong>RFF</strong> : si vos droits ARE ne couvrent pas toute la formation</li>
+                        <li><strong>RFFT</strong> : pour les non-indemnisés</li>
+                        <li><strong>RSFP</strong> : via la Région ou l'État</li>
+                        <li><strong>Rémunération POE</strong> : maintien de l'ARE ou allocation France Travail</li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <h4 style="margin-bottom: 8px;">📊 Montants actualisés</h4>
+                        <p style="color: var(--text-light);">Les barèmes sont révisés chaque année. Consultez votre conseiller France Travail pour les montants exacts.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab 3: SFER -->
+            <div id="tab-3" class="tab-content">
+                <h2 style="color: var(--primary-color); margin-bottom: 24px; font-size: 22px;">🌍 Dispositif SFER – Se Former pour un Emploi en Région</h2>
+                
+                <div class="info-box">
+                    <h3 style="margin-bottom: 16px; color: var(--text-color);">🎯 Objectif</h3>
+                    <p style="margin-bottom: 20px; color: var(--text-light);">Le SFER permet aux demandeurs d'emploi d'accéder à des <strong>formations financées à 100% par la Région</strong>.</p>
+                    
+                    <h3 style="margin-bottom: 16px; color: var(--text-color);">👥 Publics concernés</h3>
+                    <ul style="padding-left: 20px; margin-bottom: 24px; color: var(--text-light); line-height: 1.7;">
+                        <li>Demandeurs d'emploi majeurs inscrits à France Travail</li>
+                        <li>Salariés en contrat aidé ou à temps partiel</li>
                         <li>Personnes en reconversion</li>
                     </ul>
-                    <p><strong>🏢 Avec qui ?</strong> Une entreprise qui s'engage à embaucher après la formation</p>
-                    <p><strong>📄 Type de contrat après formation :</strong> CDI, CDD ≥ 12 mois, Contrat de professionnalisation, Contrat d'apprentissage</p>
-                    <p><strong>⏱ Durée :</strong> Jusqu'à 400 heures</p>
-                    <p><strong>💰 Rémunération pendant la formation :</strong> Allocation France Travail (ARE, RFPE, etc.) - Pas de salaire, sauf cas particuliers</p>
-                    <p><strong>✅ Avantages :</strong> Très fort taux d'embauche, formation ciblée exactement sur le poste, sécurisation de l'emploi</p>
                     
-                    <h4 style="margin-top: 1.5rem;">2️⃣ POEC – Préparation Opérationnelle à l'Emploi Collective</h4>
-                    <p><strong>🎯 Objectif :</strong> Former un groupe de personnes pour des métiers en tension (ceux qui recrutent beaucoup).</p>
-                    <p><strong>👥 Pour qui ?</strong> Demandeurs d'emploi - Pas besoin d'entreprise précise au départ</p>
-                    <p><strong>🏭 Secteurs fréquents :</strong> Industrie, BTP, Logistique, Numérique, Aide à la personne, Hôtellerie-restauration</p>
-                    <p><strong>📄 Embauche :</strong> Non garantie, mais très fréquente - Plusieurs entreprises partenaires recrutent à la fin</p>
-                    <p><strong>⏱ Durée :</strong> En général 300 à 400 heures</p>
-                    <p><strong>💰 Rémunération :</strong> Allocation France Travail - Formation 100% financée</p>
-                    <p><strong>✅ Avantages :</strong> Accès à des métiers qui recrutent, aucune avance de frais, bon taux de retour à l'emploi</p>
-                    
-                    <h4 style="margin-top: 1.5rem;">3️⃣ Comment accéder à une POE ?</h4>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Être inscrit à France Travail</li>
-                        <li>Identifier : une entreprise (POEI) ou une formation POEC disponible</li>
-                        <li>En parler à son conseiller France Travail</li>
-                        <li>Monter le dossier (financement + formation)</li>
-                        <li>Entrer en formation</li>
-                    </ul>
-                    
-                    <h4 style="margin-top: 1.5rem;">4️⃣ Points importants à savoir</h4>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>✅ Formation gratuite</li>
-                        <li>✅ Pas de diplôme obligatoire (souvent)</li>
-                        <li>✅ Accessible en reconversion</li>
-                        <li>✅ Forte insertion professionnelle</li>
-                        <li>❌ Rythme souvent intensif</li>
-                        <li>❌ Sélection possible (tests, entretiens)</li>
-                    </ul>
+                    <div class="success-box">
+                        <h4 style="margin-bottom: 12px;">💶 Financement & rémunération</h4>
+                        <ul style="padding-left: 20px; color: var(--text-light); line-height: 1.7;">
+                            <li>Financement intégral par la Région</li>
+                            <li>Gratuit pour le demandeur d'emploi</li>
+                            <li>ARE maintenue pour les indemnisés</li>
+                            <li>Indemnisation ASP possible pour les non-indemnisés</li>
+                        </ul>
+                    </div>
                 </div>
+            </div>
+            
+            <!-- Tab 4: AIF & POE -->
+            <div id="tab-4" class="tab-content">
+                <h2 style="color: var(--primary-color); margin-bottom: 24px; font-size: 22px;">📝 AIF & POE - Dispositifs France Travail</h2>
                 
-                <div class="info-box" style="margin-top: 2rem;">
-                    <h3>💰 AIF - Aide Individuelle à la Formation</h3>
-                    <p>L'AIF est une aide financière accordée au cas par cas par France Travail lorsque aucun autre financement n'est possible ou suffisant.</p>
+                <div class="info-box">
+                    <h3 style="margin-bottom: 16px; color: var(--text-color);">🎯 POE - Préparation Opérationnelle à l'Emploi</h3>
                     
-                    <h4 style="margin-top: 1.5rem;">1️⃣ Qu'est-ce que l'AIF ?</h4>
-                    <p>Elle sert à compléter ou remplacer : le CPF, les financements Région, les aides de branche ou d'OPCO.</p>
+                    <div style="margin: 20px 0;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-color);">POE – Individuelle ou Collective</h4>
+                        <ul style="padding-left: 20px; margin-bottom: 20px; color: var(--text-light); line-height: 1.7;">
+                            <li><strong>POE Individuelle</strong> : pour un poste précis dans une entreprise</li>
+                            <li><strong>POE Collective</strong> : pour des métiers en tension</li>
+                            <li>Embauche garantie (POE individuelle) ou fortement probable (collective)</li>
+                            <li>Jusqu'à 400 heures de formation</li>
+                            <li>ARE maintenue si ≥ 40h</li>
+                        </ul>
+                    </div>
                     
-                    <h4 style="margin-top: 1.5rem;">2️⃣ À qui s'adresse l'AIF ?</h4>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>✅ Demandeurs d'emploi inscrits à France Travail</li>
-                        <li>✅ Personnes en reconversion professionnelle</li>
-                        <li>✅ Bénéficiaires : ARE, ASS, RSA, RFPE, AREF</li>
-                        <li>❌ Pas accessible aux salariés (sauf cas très particuliers via transition pro)</li>
-                    </ul>
-                    
-                    <h4 style="margin-top: 1.5rem;">3️⃣ Quelles formations peuvent être financées ?</h4>
-                    <p>La formation doit être : professionnalisante, cohérente avec un projet d'emploi, réaliste sur le marché du travail.</p>
-                    <p><strong>Exemples de formations financées :</strong></p>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Titre professionnel (TP)</li>
-                        <li>Certificat / qualification</li>
-                        <li>Permis (B, C, D…) si indispensable à l'emploi</li>
-                        <li>Formation courte d'adaptation au poste</li>
-                        <li>Reconversion vers un métier qui recrutent</li>
-                    </ul>
-                    <p><strong>❌ Formations refusées en général :</strong></p>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Loisirs / développement personnel</li>
-                        <li>Formations sans débouchés clairs</li>
-                        <li>Projets non validés par le conseiller</li>
-                    </ul>
-                    
-                    <h4 style="margin-top: 1.5rem;">4️⃣ Montant de l'AIF</h4>
-                    <p><strong>💰 Pas de plafond national fixe</strong><br>Le montant dépend : du coût de la formation, de ton projet, de ton bassin d'emploi, des cofinancements possibles.</p>
-                    <p>👉 L'AIF peut : financer 100% de la formation ou compléter le CPF si celui-ci est insuffisant.</p>
-                    <p><strong>⚠️ Le paiement est fait directement à l'organisme de formation, jamais à la personne.</strong></p>
-                    
-                    <h4 style="margin-top: 1.5rem;">5️⃣ Rémunération pendant la formation</h4>
-                    <p>Pendant une formation financée par AIF, tu peux percevoir :</p>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>AREF (si tu touches l'ARE)</li>
-                        <li>RFPE (si tu n'as plus de droits)</li>
-                        <li>Maintien de certaines allocations</li>
-                    </ul>
-                    <p><strong>👉 L'AIF finance la formation, pas la rémunération.</strong></p>
-                    
-                    <h4 style="margin-top: 1.5rem;">6️⃣ Comment obtenir une AIF ? (étapes)</h4>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li><strong>🧭 Étape 1 :</strong> Projet professionnel clair (Métier visé, Débouchés réels, Cohérence avec ton profil)</li>
-                        <li><strong>📄 Étape 2 :</strong> Devis de formation (Organisme certifié Qualiopi, Programme détaillé, Dates et coût)</li>
-                        <li><strong>🤝 Étape 3 :</strong> Validation par le conseiller (Entretien avec France Travail, Justification du besoin de formation)</li>
-                        <li><strong>💻 Étape 4 :</strong> Demande officielle (Dépôt du dossier AIF, Instruction du dossier)</li>
-                        <li><strong>⏳ Réponse en général sous 2 à 4 semaines</strong></li>
-                    </ul>
-                    
-                    <h4 style="margin-top: 1.5rem;">7️⃣ Avantages et inconvénients</h4>
-                    <p><strong>✅ Avantages :</strong></p>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Formation gratuite ou quasi gratuite</li>
-                        <li>Très utile pour les reconversions</li>
-                        <li>Complément du CPF possible</li>
-                        <li>Financement sur mesure</li>
-                    </ul>
-                    <p><strong>❌ Inconvénients :</strong></p>
-                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Pas automatique</li>
-                        <li>Dossier parfois refusé</li>
-                        <li>Délai de validation</li>
-                        <li>Projet doit être solide et justifié</li>
-                    </ul>
+                    <div class="success-box">
+                        <h4 style="margin-bottom: 12px;">💰 AIF - Aide Individuelle à la Formation</h4>
+                        <ul style="padding-left: 20px; color: var(--text-light); line-height: 1.7;">
+                            <li>Financement de formation au cas par cas</li>
+                            <li>Complément ou remplacement d'autres financements</li>
+                            <li>Formations professionnalisantes</li>
+                            <li>Délai d'instruction : 2 à 4 semaines</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             
             <!-- Footer -->
             <div class="footer">
                 🛈 Application informative <br>
-                📅 Dernière mise à jour : 13-01-2026 <br>
-                Sources : France Travail, Service Public.
+                📅 Dernière mise à jour : Janvier 2026 <br>
+                Sources : France Travail, Service Public
             </div>
         </main>
     </div>
-    
-    <!-- jsPDF library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
+
     <script>
-        // Theme management
-        function setTheme(theme, buttonElement) {
+        // Gestion des thèmes
+        function setTheme(theme) {
             document.body.classList.remove('light-theme', 'dark-theme');
             document.body.classList.add(theme + '-theme');
             localStorage.setItem('theme', theme);
             
+            // Mettre à jour les boutons
             document.querySelectorAll('.theme-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            if (buttonElement) {
-                buttonElement.classList.add('active');
-            }
             
-            const themeText = document.getElementById('current-theme');
-            if (themeText) {
-                themeText.textContent = theme === 'light' ? '☀️ Mode clair' : '🌙 Mode sombre';
-            }
+            // Trouver le bouton correspondant au thème et l'activer
+            const themeButtons = document.querySelectorAll('.theme-btn');
+            themeButtons.forEach(btn => {
+                if (btn.textContent.includes(theme === 'light' ? 'Clair' : 'Sombre')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Mettre à jour l'affichage
+            document.getElementById('current-theme').textContent = 
+                theme === 'light' ? 'Clair' : 'Sombre';
         }
         
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        setTheme(savedTheme, null);
-        
-        // Attacher le formulaire
-        function attachForm() {
-            const form = document.getElementById('simulation-form');
-            if (form) {
-                const newForm = form.cloneNode(true);
-                form.parentNode.replaceChild(newForm, form);
-                
-                newForm.addEventListener('submit', function(e) {
-                    if (typeof window.handleSubmit === 'function') {
-                        window.handleSubmit(e);
-                    } else {
-                        console.error('handleSubmit n\'est pas définie');
-                    }
-                });
-                return true;
-            } else {
-                console.warn('Formulaire non trouvé');
-                return false;
-            }
-        }
-        
-        // Chargement de la page
-        window.addEventListener('load', function() {
-            attachForm();
+        // Charger le thème sauvegardé au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+            
+            // Initialiser le premier onglet
+            switchTab(0);
+            
+            // Ajouter l'écouteur d'événement au formulaire
+            document.getElementById('simulation-form').addEventListener('submit', handleSubmit);
         });
         
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', attachForm);
-        } else {
-            attachForm();
-        }
-        
-        // Tab switching
-        function switchTab(index) {
+        // Gestion des onglets
+        function switchTab(tabIndex) {
+            // Cacher tous les contenus d'onglets
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
+            
+            // Désactiver tous les boutons d'onglets
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            document.getElementById(`tab-${index}`).classList.add('active');
-            document.querySelectorAll('.tab')[index].classList.add('active');
+            // Activer l'onglet sélectionné
+            document.getElementById('tab-' + tabIndex).classList.add('active');
+            document.querySelectorAll('.tab')[tabIndex].classList.add('active');
         }
         
-        // Fonction pour convertir HTML en texte pour PDF
-        function htmlToText(html) {
-            if (!html) return '';
+        // Gestion de la soumission du formulaire
+        function handleSubmit(e) {
+            e.preventDefault();
             
-            let text = html
-                .replace(/<br\s*\/?>/gi, '\n')
-                .replace(/<p>/gi, '\n')
-                .replace(/<\/p>/gi, '\n')
-                .replace(/<ul>/gi, '\n')
-                .replace(/<\/ul>/gi, '\n')
-                .replace(/<li>/gi, '• ')
-                .replace(/<\/li>/gi, '\n')
-                .replace(/<strong>/gi, '')
-                .replace(/<\/strong>/gi, '')
-                .replace(/<[^>]+>/g, '')
-                .replace(/\n\s*\n/g, '\n')
-                .trim();
+            // Récupérer les valeurs du formulaire
+            const are = document.querySelector('input[name="are"]:checked')?.value;
+            const formation_type = document.querySelector('select[name="formation_type"]').value;
+            const formation_duree = document.querySelector('input[name="formation_duree"]:checked')?.value;
+            const droits_fin = document.querySelector('input[name="droits_fin"]:checked')?.value;
             
-            return text;
-        }
-        
-        // Generate PDF amélioré avec informations détaillées
-        function generatePDF(are, rsa, formation_type, formation_duree, droits_fin, mainResult, mainDetails, resultBoxes) {
-            let JsPDFClass;
-            if (typeof window.jspdf !== 'undefined') {
-                JsPDFClass = window.jspdf.jsPDF || (window.jspdf.default && window.jspdf.default.jsPDF) || window.jspdf;
-            } else if (typeof window.jsPDF !== 'undefined') {
-                JsPDFClass = window.jsPDF;
-            } else {
-                alert('Erreur : La bibliothèque PDF n\'est pas chargée.');
-                return null;
-            }
-            
-            const doc = new JsPDFClass('p', 'mm', 'a4');
-            
-            const pageWidth = doc.internal.pageSize.width;
-            const margin = 20;
-            const contentWidth = pageWidth - (2 * margin);
-            
-            // En-tête élégant
-            doc.setFillColor(90, 125, 154);
-            doc.rect(0, 0, pageWidth, 40, 'F');
-            
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(22);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Résultat de simulation - Aides à la Formation', margin, 25);
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            doc.text('France Travail • Régions • Dispositif SFER', margin, 32);
-            doc.text(`Généré le : ${new Date().toLocaleDateString('fr-FR')}`, pageWidth - margin, 32, { align: 'right' });
-            
-            doc.setDrawColor(90, 125, 154);
-            doc.setLineWidth(0.5);
-            doc.line(margin, 45, pageWidth - margin, 45);
-            
-            let yPos = 60;
-            
-            // Section : Résultat de votre simulation
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(16);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Résultat de votre simulation', margin, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(12);
-            doc.setFont('helvetica', 'bold');
-            const cleanResult = mainResult.replace(/✅|⚠️|ℹ️|❓/g, '').trim();
-            doc.setTextColor(90, 125, 154);
-            doc.text(cleanResult, margin, yPos);
-            yPos += 8;
-            
-            doc.setFontSize(11);
-            doc.setFont('helvetica', 'normal');
-            doc.setTextColor(60, 60, 60);
-            const lines = doc.splitTextToSize(mainDetails, contentWidth);
-            doc.text(lines, margin, yPos);
-            yPos += (lines.length * 6) + 15;
-            
-            // Section : Votre situation
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(0, 0, 0);
-            doc.text('Votre situation :', margin, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(11);
-            doc.setFont('helvetica', 'normal');
-            
-            const infoData = [
-                ['ARE (Allocation chômage) :', are],
-                ['RSA (Revenu de Solidarité Active) :', rsa],
-                ['Type de formation :', formation_type],
-                ['Durée de la formation :', formation_duree],
-                ['Droits ARE couvrent toute la formation :', droits_fin]
-            ];
-            
-            infoData.forEach(row => {
-                if (yPos > 250) {
-                    doc.addPage();
-                    yPos = 20;
-                }
-                
-                doc.setTextColor(90, 125, 154);
-                doc.setFont('helvetica', 'bold');
-                doc.text(row[0], margin + 5, yPos);
-                
-                doc.setTextColor(0, 0, 0);
-                doc.setFont('helvetica', 'normal');
-                doc.text(row[1], margin + contentWidth/2, yPos);
-                
-                yPos += 8;
-            });
-            
-            yPos += 10;
-            
-            // Section : Informations détaillées
-            if (yPos > 200) {
-                doc.addPage();
-                yPos = 20;
-            }
-            
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(0, 0, 0);
-            doc.text('Informations détaillées :', margin, yPos);
-            yPos += 10;
-            
-            // Ajouter les informations détaillées de la simulation
-            if (resultBoxes && resultBoxes.length > 0) {
-                resultBoxes.forEach((box, index) => {
-                    if (box.type === 'montant-details') {
-                        // Ne pas traiter les boîtes de montant-details ici
-                        return;
-                    }
-                    
-                    if (yPos > 240) {
-                        doc.addPage();
-                        yPos = 20;
-                    }
-                    
-                    // Titre de la boîte
-                    doc.setFontSize(12);
-                    doc.setFont('helvetica', 'bold');
-                    
-                    // Couleur selon le type
-                    if (box.type === 'success') {
-                        doc.setTextColor(76, 175, 127); // Vert
-                    } else if (box.type === 'warning') {
-                        doc.setTextColor(217, 166, 108); // Orange
-                    } else {
-                        doc.setTextColor(108, 160, 220); // Bleu
-                    }
-                    
-                    const cleanMessage = box.message.replace(/✅|⚠️|ℹ️|❓/g, '').trim();
-                    doc.text(cleanMessage, margin, yPos);
-                    yPos += 8;
-                    
-                    // Contenu de la boîte
-                    doc.setFontSize(10);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(60, 60, 60);
-                    
-                    const boxContent = htmlToText(box.details);
-                    if (boxContent) {
-                        const contentLines = doc.splitTextToSize(boxContent, contentWidth);
-                        doc.text(contentLines, margin, yPos);
-                        yPos += (contentLines.length * 5) + 8;
-                    }
-                    
-                    // Ligne séparatrice entre les boîtes
-                    if (index < resultBoxes.length - 1) {
-                        doc.setDrawColor(200, 200, 200);
-                        doc.line(margin, yPos, pageWidth - margin, yPos);
-                        yPos += 10;
-                    }
-                });
-            }
-            
-            // Section : Montant
-            if (yPos > 220) {
-                doc.addPage();
-                yPos = 20;
-            }
-            
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(0, 0, 0);
-            doc.text('Informations financières :', margin, yPos);
-            yPos += 10;
-            
-            // Déterminer le type de rémunération
-            let remunerationType = '';
-            if (formation_type === 'POE') remunerationType = 'POE';
-            else if (formation_type === 'AIF') remunerationType = 'AIF';
-            else if (formation_type === 'CPF') remunerationType = 'CPF';
-            else if (formation_type.includes('Région')) remunerationType = 'RSFP';
-            else if (are === 'Oui' && formation_duree === '> 40 heures') remunerationType = 'AREF';
-            else if (are === 'Non' && rsa === 'Non') remunerationType = 'RFFT';
-            
-            // Informations sur les montants
-            doc.setFontSize(11);
-            doc.setFont('helvetica', 'normal');
-            doc.setTextColor(60, 60, 60);
-            
-            let montantInfo = '';
-            switch(remunerationType) {
-                case 'AREF':
-                    montantInfo = "Montant : Équivalent à votre ARE actuelle\n\nDétails : Maintien de l'ARE pendant la formation si elle est prescrite par France Travail et dure au moins 40 heures.";
-                    break;
-                case 'RFF':
-                    montantInfo = "Montant : Plafonnée à 652,02 € / mois selon le décret\n\nDétails : Pour les personnes dont les droits ARE s'épuisent pendant la formation.";
-                    break;
-                case 'RFFT':
-                    montantInfo = "Montant : De 224,68 € à 769,49 € / mois (jusqu'à 2 170 € pour travailleurs handicapés)\n\nDétails : Pour les demandeurs d'emploi non indemnisés suivant une formation prescrite par France Travail.";
-                    break;
-                case 'RSFP':
-                    montantInfo = "Montant : Barème indicatif :\n• Moins de 18 ans: 220,92€/mois\n• 18-25 ans: 561,68€/mois\n• 26 ans+: 769,49€/mois\n\nDétails : Pour les formations financées par la Région ou l'État.";
-                    break;
-                case 'POE':
-                    montantInfo = "Montant : Allocation France Travail (ARE, RFPE, etc.)\n\nDétails : Pas de salaire (sauf cas particuliers). Formation 100% financée.";
-                    break;
-                case 'AIF':
-                    montantInfo = "Montant : Financement des frais de formation (100% ou complément)\n\nDétails : L'AIF finance la formation, pas la rémunération. AREF possible si ARE et formation ≥ 40h.";
-                    break;
-                case 'CPF':
-                    montantInfo = "Montant : Utilisation des droits CPF + abondement possible par France Travail\n\nDétails : AREF possible si formation ≥ 40h et prescrite par France Travail.";
-                    break;
-                default:
-                    montantInfo = "Les informations financières dépendent de votre situation spécifique. Veuillez consulter votre conseiller France Travail pour des précisions.";
-            }
-            
-            const montantLines = doc.splitTextToSize(montantInfo, contentWidth);
-            doc.text(montantLines, margin, yPos);
-            yPos += (montantLines.length * 5) + 15;
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'italic');
-            doc.setTextColor(100, 100, 100);
-            doc.text('Ces montants sont indicatifs et peuvent évoluer. Source : France Travail.', margin, yPos);
-            yPos += 10;
-            
-            // Section : Prochaines étapes
-            if (yPos > 200) {
-                doc.addPage();
-                yPos = 20;
-            }
-            
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(0, 0, 0);
-            doc.text('Prochaines étapes :', margin, yPos);
-            yPos += 10;
-            
-            const steps = [
-                "Rechercher une formation auprès d'un organisme de formation (OF)",
-                "Rechercher une immersion professionnelle (PMSMP) si possible",
-                "Preparer le curriculum vitae (CV)",
-                "Preparer la lettre de motivation",
-                "Actualiser sa situation chaque fin de mois une fois en formation",
-                "Consulter votre conseiller France Travail pour valider votre projet"
-            ];
-            
-            doc.setFontSize(11);
-            doc.setFont('helvetica', 'normal');
-            doc.setTextColor(60, 60, 60);
-            
-            steps.forEach(step => {
-                if (yPos > 250) {
-                    doc.addPage();
-                    yPos = 20;
-                }
-                
-                doc.setTextColor(90, 125, 154);
-                doc.text('•', margin, yPos);
-                doc.setTextColor(60, 60, 60);
-                
-                const stepLines = doc.splitTextToSize(step, contentWidth - 5);
-                doc.text(stepLines, margin + 5, yPos);
-                
-                yPos += (stepLines.length * 6) + 6;
-            });
-            
-            // Pied de page
-            const footerY = 280;
-            doc.setDrawColor(200, 200, 200);
-            doc.line(margin, footerY, pageWidth - margin, footerY);
-            
-            doc.setFontSize(8);
-            doc.setTextColor(150, 150, 150);
-            doc.setFont('helvetica', 'italic');
-            doc.text('Document généré par l\'application de simulation France Travail', margin, footerY + 5);
-            doc.text('Informations à caractère indicatif - Dernière mise à jour : 13/01/2026', pageWidth - margin, footerY + 5, { align: 'right' });
-            
-            return doc;
-        }
-        
-        // Variable globale pour stocker les données de simulation
-        let simulationData = null;
-        
-        // Fonction pour générer des informations détaillées enrichies
-        function generateDetailedInfo(are, rsa, formation_type, formation_duree, droits_fin) {
-            let boxes = [];
-            
-            if (formation_type === 'POE') {
-                boxes.push({
-                    type: 'success',
-                    message: '🎯 POE - Préparation Opérationnelle à l\'Emploi',
-                    details: 'Formation ciblée pour un poste précis (POEI) ou un métier en tension (POEC).'
-                });
-                
-                if (are === 'Oui' && formation_duree === '> 40 heures') {
-                    boxes.push({
-                        type: 'info',
-                        message: '💰 AREF - Maintien de l\'ARE',
-                        details: 'Votre ARE est maintenue pendant toute la durée de la POE.'
-                    });
-                    
-                    boxes.push({
-                        type: 'info',
-                        message: '📋 Conditions pour l\'AREF',
-                        details: `
-                            <ul>
-                                <li>Formation prescrite par France Travail</li>
-                                <li>Durée minimale de 40 heures</li>
-                                <li>Assiduité obligatoire</li>
-                                <li>Déclaration mensuelle de situation</li>
-                            </ul>
-                        `
-                    });
-                } else if (rsa === 'Oui') {
-                    boxes.push({
-                        type: 'info',
-                        message: '💰 RSA maintenu',
-                        details: 'Le RSA peut être maintenu pendant la POE sous certaines conditions.'
-                    });
-                }
-                
-                boxes.push({
-                    type: 'info',
-                    message: '⚙️ Processus POE',
-                    details: `
-                        <ul>
-                            <li><strong>Étape 1 :</strong> Identification du besoin en formation</li>
-                            <li><strong>Étape 2 :</strong> Signature de la convention tripartite</li>
-                            <li><strong>Étape 3 :</strong> Entrée en formation</li>
-                            <li><strong>Étape 4 :</strong> Suivi et évaluation</li>
-                            <li><strong>Étape 5 :</strong> Embauche (POEI) ou recherche d'emploi (POEC)</li>
-                        </ul>
-                    `
-                });
-                
-                boxes.push({
-                    type: 'warning',
-                    message: '⚠️ Points d\'attention',
-                    details: `
-                        <ul>
-                            <li>La POE ne garantit pas l'embauche (sauf POEI avec engagement écrit)</li>
-                            <li>Rythme souvent intensif</li>
-                            <li>Sélection possible via tests et entretiens</li>
-                            <li>Engagement d'assiduité requis</li>
-                        </ul>
-                    `
-                });
-                
-            } else if (formation_type === 'AIF') {
-                boxes.push({
-                    type: 'info',
-                    message: '💰 AIF - Aide Individuelle à la Formation',
-                    details: 'Financement de formation au cas par cas par France Travail.'
-                });
-                
-                if (are === 'Oui' && formation_duree === '> 40 heures') {
-                    boxes.push({
-                        type: 'success',
-                        message: '✅ AREF possible',
-                        details: 'Maintien de votre ARE pendant la formation financée par AIF.'
-                    });
-                    
-                    boxes.push({
-                        type: 'info',
-                        message: '📊 Montant AREF',
-                        details: 'Identique à votre ARE actuelle. Vous devez actualiser votre situation chaque mois.'
-                    });
-                }
-                
-                boxes.push({
-                    type: 'info',
-                    message: '📝 Critères d\'éligibilité AIF',
-                    details: `
-                        <ul>
-                            <li>Formation professionnalisante</li>
-                            <li>Cohérente avec votre projet professionnel</li>
-                            <li>Réaliste sur le marché du travail local</li>
-                            <li>Absence d\'autres financements possibles</li>
-                            <li>Organisme de formation certifié Qualiopi</li>
-                        </ul>
-                    `
-                });
-                
-                boxes.push({
-                    type: 'info',
-                    message: '⏳ Délais et démarches',
-                    details: `
-                        <ul>
-                            <li><strong>Délai d\'instruction :</strong> 2 à 4 semaines</li>
-                            <li><strong>Pièces à fournir :</strong> devis, projet professionnel, CV</li>
-                            <li><strong>Validation :</strong> par votre conseiller France Travail</li>
-                            <li><strong>Paiement :</strong> direct à l\'organisme de formation</li>
-                        </ul>
-                    `
-                });
-                
-            } else if (formation_type === 'CPF') {
-                boxes.push({
-                    type: 'info',
-                    message: '💳 Formation via votre CPF',
-                    details: 'Utilisation de vos droits CPF avec possibilité d\'abondement par France Travail.'
-                });
-                
-                if (are === 'Oui' && formation_duree === '> 40 heures') {
-                    boxes.push({
-                        type: 'success',
-                        message: '✅ AREF possible',
-                        details: 'Maintien de votre ARE si la formation est prescrite par France Travail.'
-                    });
-                }
-                
-                boxes.push({
-                    type: 'info',
-                    message: '📈 Abondement CPF par France Travail',
-                    details: `
-                        <ul>
-                            <li>Possible si vos droits CPF sont insuffisants</li>
-                            <li>Nécessite un avis favorable de votre conseiller</li>
-                            <li>Formation doit être éligible au CPF</li>
-                            <li>Justification du projet professionnel requise</li>
-                        </ul>
-                    `
-                });
-                
-                boxes.push({
-                    type: 'warning',
-                    message: '⚠️ Points importants CPF',
-                    details: `
-                        <ul>
-                            <li>Vérifiez vos droits sur Mon Compte Formation</li>
-                            <li>Certaines formations peuvent nécessiter un cofinancement</li>
-                            <li>AREF uniquement si formation ≥ 40h et prescrite</li>
-                            <li>Conservez toutes les attestations et justificatifs</li>
-                        </ul>
-                    `
-                });
-                
-            } else if (formation_type === 'Formation Région (ex : SFER)') {
-                boxes.push({
-                    type: 'info',
-                    message: '🌍 Formation régionale SFER',
-                    details: 'Formation financée à 100% par votre Conseil Régional.'
-                });
-                
-                if (are === 'Oui') {
-                    boxes.push({
-                        type: 'success',
-                        message: '✅ Maintien de l\'ARE',
-                        details: 'Vous continuez à percevoir votre ARE pendant la formation régionale.'
-                    });
-                } else if (rsa === 'Oui') {
-                    boxes.push({
-                        type: 'info',
-                        message: '💰 RSA maintenu',
-                        details: 'Le RSA peut être maintenu pendant une formation régionale.'
-                    });
-                } else if (are === 'Non' && rsa === 'Non') {
-                    boxes.push({
-                        type: 'info',
-                        message: '💶 RSFP possible',
-                        details: 'Rémunération des Stagiaires de la Formation Professionnelle selon barème régional.'
-                    });
-                    
-                    boxes.push({
-                        type: 'montant-details',
-                        message: '📊 Barème indicatif RSFP',
-                        details: `
-                            <div class="montant-details">
-                                <h5>Montants mensuels indicatifs :</h5>
-                                <p>• Moins de 18 ans : 220,92 €</p>
-                                <p>• 18 à 25 ans : 561,68 €</p>
-                                <p>• 26 ans et plus : 769,49 €</p>
-                                <p>• Travailleurs handicapés : jusqu'à 2 170 €</p>
-                            </div>
-                        `
-                    });
-                }
-                
-                boxes.push({
-                    type: 'info',
-                    message: '🎯 Conditions SFER',
-                    details: `
-                        <ul>
-                            <li>Être inscrit à France Travail</li>
-                            <li>Formation labellisée SFER</li>
-                            <li>Projet professionnel validé</li>
-                            <li>Respecter l'assiduité</li>
-                            <li>Déclaration mensuelle de situation</li>
-                        </ul>
-                    `
-                });
-            }
-            
-            // Ajouter des informations communes
-            boxes.push({
-                type: 'info',
-                message: '📞 Prochaines démarches',
-                details: `
-                    <ul>
-                        <li>Prendre rendez-vous avec votre conseiller France Travail</li>
-                        <li>Préparer votre projet professionnel détaillé</li>
-                        <li>Rechercher des formations éligibles</li>
-                        <li>Rassembler les documents nécessaires (RIB, pièce d'identité, justificatifs)</li>
-                        <li>Actualiser régulièrement votre situation sur France Travail</li>
-                    </ul>
-                `
-            });
-            
-            boxes.push({
-                type: 'warning',
-                message: '⏰ Délais à respecter',
-                details: `
-                    <ul>
-                        <li>Demande de financement : au moins 1 mois avant le début de formation</li>
-                        <li>Déclaration de situation : chaque fin de mois</li>
-                        <li>Justificatifs d'assiduité : à fournir selon les exigences</li>
-                        <li>Actualisation France Travail : obligatoire même en formation</li>
-                    </ul>
-                `
-            });
-            
-            return boxes;
-        }
-        
-        // Form submission
-        window.handleSubmit = function(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const formData = new FormData(form);
-            const are = formData.get('are');
-            const rsa = formData.get('rsa');
-            const formation_type = formData.get('formation_type');
-            const formation_duree = formData.get('formation_duree');
-            const droits_fin = formData.get('droits_fin');
-            
-            if (!are || !rsa || !formation_type || !formation_duree || !droits_fin) {
-                alert('Veuillez remplir tous les champs du formulaire.');
+            // Validation
+            if (!are || !formation_type || !formation_duree) {
+                alert('Veuillez répondre à toutes les questions obligatoires.');
                 return;
             }
             
-            // Calculate results
-            let mainResult = '';
-            let mainDetails = '';
+            // Logique de simulation améliorée
+            let resultTitle = '';
+            let resultDetails = '';
+            let resultType = 'info';
+            let montantInfo = '';
+            let conditions = '';
             
-            // Logique de simulation principale
             if (formation_type === 'POE') {
-                if (are === 'Oui' || rsa === 'Oui') {
-                    mainResult = "✅ Vous êtes éligible à une POE";
-                    mainDetails = "La POE est accessible aux bénéficiaires de l'ARE et du RSA.";
+                if (are === 'Oui') {
+                    if (formation_duree === '> 40 heures') {
+                        resultTitle = '✅ Éligible au maintien de l\'ARE (AREF) pendant la POE';
+                        resultDetails = 'Vous pouvez bénéficier du maintien de votre Allocation chômage pendant toute la durée de la formation POE.';
+                        montantInfo = 'Montant : Identique à votre ARE actuelle';
+                        conditions = 'Conditions : Formation ≥ 40h, prescrite par France Travail, assiduité obligatoire';
+                        resultType = 'success';
+                    } else {
+                        resultTitle = '⚠️ Formation POE de courte durée';
+                        resultDetails = 'Pour une formation ≤ 40h, le maintien de l\'ARE n\'est pas automatique. Consultez votre conseiller.';
+                        resultType = 'warning';
+                    }
                 } else {
-                    mainResult = "ℹ️ POE possible";
-                    mainDetails = "La POE est accessible même sans allocation spécifique.";
+                    resultTitle = 'ℹ️ Allocation de formation possible (RFFT)';
+                    resultDetails = 'Vous pourriez bénéficier de la Rémunération de Formation France Travail pendant votre POE.';
+                    montantInfo = 'Montant indicatif : De 224€ à 769€/mois selon votre situation';
+                    resultType = 'info';
                 }
             } 
             else if (formation_type === 'AIF') {
-                mainResult = "ℹ️ AIF - Aide Individuelle à la Formation";
-                mainDetails = "Financement de formation au cas par cas par France Travail.";
+                resultTitle = 'ℹ️ AIF - Aide Individuelle à la Formation';
+                resultDetails = 'Financement possible de votre formation après étude de dossier par France Travail.';
+                if (are === 'Oui' && formation_duree === '> 40 heures') {
+                    montantInfo = 'AREF possible : Maintien de votre ARE pendant la formation';
+                }
+                resultType = 'info';
             }
             else if (formation_type === 'CPF') {
-                mainResult = "ℹ️ Formation via votre CPF";
-                mainDetails = "Utilisation de vos droits CPF avec possibilité d'abondement par France Travail.";
+                resultTitle = '💳 Formation via votre CPF';
+                resultDetails = 'Utilisation de vos droits CPF avec possibilité d\'abondement par France Travail.';
+                if (are === 'Oui' && formation_duree === '> 40 heures') {
+                    montantInfo = 'AREF possible si formation prescrite par France Travail';
+                }
+                resultType = 'info';
             }
-            else if (formation_type === 'Formation Région (ex : SFER)') {
-                mainResult = "ℹ️ Formation régionale";
-                mainDetails = "Formation financée à 100% par votre Conseil Régional.";
+            else if (formation_type === 'Formation Region') {
+                resultTitle = '🌍 Formation Régionale SFER';
+                resultDetails = 'Formation financée à 100% par votre Région.';
+                if (are === 'Oui') {
+                    montantInfo = 'ARE maintenue pendant la formation';
+                    resultType = 'success';
+                } else {
+                    montantInfo = 'RSFP possible : Rémunération selon barème régional';
+                    resultType = 'info';
+                }
             }
             
-            // Générer les informations détaillées enrichies
-            const resultBoxes = generateDetailedInfo(are, rsa, formation_type, formation_duree, droits_fin);
-            
-            // Stocker les données pour le PDF
-            simulationData = {
-                are, rsa, formation_type, formation_duree, droits_fin,
-                mainResult, mainDetails, resultBoxes
-            };
-            
-            // Affichage des résultats avec nouveau format enrichi
+            // Afficher les résultats
             const resultsContainer = document.getElementById('results-container');
             resultsContainer.innerHTML = `
                 <div class="result-header">
-                    <h2>🎯 Résultat de votre simulation</h2>
-                    <h3>${mainResult}</h3>
-                    <p>${mainDetails}</p>
+                    <h2 style="color: var(--primary-color); margin-bottom: 16px; font-size: 24px;">🎯 Résultat de votre simulation</h2>
+                    <h3 style="margin-bottom: 16px; font-size: 20px;">${resultTitle}</h3>
+                    <p style="margin-bottom: 20px; font-size: 16px;">${resultDetails}</p>
+                    ${montantInfo ? `<p style="background: rgba(76, 175, 127, 0.1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--success-color);">
+                        <strong>💰 ${montantInfo}</strong>
+                    </p>` : ''}
                 </div>
                 
-                <div class="simulation-details">
-                    <h3>📋 Détails de votre situation</h3>
+                <div class="info-box">
+                    <h3 style="margin-bottom: 16px; color: var(--text-color);">📋 Détails de votre situation</h3>
                     <div class="situation-summary">
                         <div class="situation-item">
                             <strong>ARE (Allocation chômage) :</strong>
                             <span>${are}</span>
-                        </div>
-                        <div class="situation-item">
-                            <strong>RSA (Revenu de Solidarité Active) :</strong>
-                            <span>${rsa}</span>
                         </div>
                         <div class="situation-item">
                             <strong>Type de formation :</strong>
@@ -1828,75 +860,41 @@
                             <span>${formation_duree}</span>
                         </div>
                         <div class="situation-item">
-                            <strong>Droits ARE couvrent toute la formation :</strong>
-                            <span>${droits_fin}</span>
+                            <strong>Droits ARE :</strong>
+                            <span>${droits_fin || 'Non renseigné'}</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="simulation-details">
-                    <h3>💡 Informations détaillées</h3>
-                    ${resultBoxes.map(box => {
-                        if (box.type === 'montant-details') {
-                            return box.details;
-                        } else {
-                            return `
-                                <div class="${box.type}-box">
-                                    <h4>${box.message}</h4>
-                                    ${box.details}
-                                </div>
-                            `;
-                        }
-                    }).join('')}
+                <div class="${resultType}-box">
+                    <h4 style="margin-bottom: 12px;">💡 Prochaines étapes</h4>
+                    <ul style="padding-left: 20px; color: var(--text-light); line-height: 1.7;">
+                        <li>Prenez rendez-vous avec votre conseiller France Travail</li>
+                        <li>Préparez votre projet professionnel détaillé</li>
+                        <li>Rassemblez les documents nécessaires (RIB, pièce d'identité, justificatifs)</li>
+                        <li>Actualisez votre situation sur France Travail</li>
+                        <li>Recherchez des formations éligibles</li>
+                    </ul>
+                    ${conditions ? `<p style="margin-top: 16px; padding: 12px; background: rgba(217, 166, 108, 0.1); border-radius: 6px; border-left: 3px solid var(--warning-color);">
+                        <strong>⚠️ ${conditions}</strong>
+                    </p>` : ''}
                 </div>
                 
-                <button class="download-btn" id="download-pdf-btn">
+                <button class="download-btn" onclick="downloadResults()">
                     <span>📄</span> Télécharger le résultat en PDF
                 </button>
             `;
             
-            // Ajouter l'event listener pour le téléchargement PDF
-            setTimeout(() => {
-                const downloadBtn = document.getElementById('download-pdf-btn');
-                if (downloadBtn) {
-                    downloadBtn.onclick = () => {
-                        if (simulationData) {
-                            downloadPDF(
-                                simulationData.are,
-                                simulationData.rsa,
-                                simulationData.formation_type,
-                                simulationData.formation_duree,
-                                simulationData.droits_fin,
-                                simulationData.mainResult,
-                                simulationData.mainDetails,
-                                simulationData.resultBoxes
-                            );
-                        }
-                    };
-                }
-            }, 100);
-            
+            // Faire défiler jusqu'aux résultats
             resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        };
+        }
         
-        // Fonction de téléchargement PDF
-        window.downloadPDF = function(are, rsa, formation_type, formation_duree, droits_fin, mainResult, mainDetails, resultBoxes) {
-            try {
-                if (typeof window.jspdf === 'undefined' && typeof window.jsPDF === 'undefined') {
-                    alert('La bibliothèque PDF n\'est pas encore chargée. Veuillez patienter quelques secondes.');
-                    return;
-                }
-                
-                const doc = generatePDF(are, rsa, formation_type, formation_duree, droits_fin, mainResult, mainDetails, resultBoxes);
-                if (doc) {
-                    const fileName = `Simulation_Formation_${new Date().toISOString().slice(0,10)}.pdf`;
-                    doc.save(fileName);
-                }
-            } catch (error) {
-                console.error('Erreur lors de la génération du PDF:', error);
-                alert('Erreur lors de la génération du PDF.');
-            }
-        };
+        // Fonction pour télécharger les résultats (simulée pour l'instant)
+        function downloadResults() {
+            alert('La génération de PDF nécessite la bibliothèque jsPDF. Pour le moment, vous pouvez faire une capture d\'écran ou imprimer la page (Ctrl+P).');
+            // Pour une vraie implémentation PDF, vous pouvez intégrer jsPDF
+            // generatePDF();
+        }
     </script>
 </body>
 </html>
